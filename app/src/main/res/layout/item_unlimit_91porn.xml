@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="120dp"
+                                    android:layout_marginBottom="3dp"
+                                    android:orientation="vertical"
+                                    app:cardBackgroundColor="@color/item_background"
+                                    app:cardCornerRadius="3dp"
+                                    app:cardPreventCornerOverlap="true"
+                                    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_91porn_item_img"
+            android:layout_width="165dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/iv_91porn_item_img"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_91porn_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_91porn_item_img"
+                android:layout_weight="1"
+                android:textColor="@color/item_91pron_title_text_color"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeMinTextSize="14sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                tools:text="hhhhhhhh常常的的的點點滴滴多"
+            />
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+            />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_91porn_item_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:textColor="@android:color/tertiary_text_light"
+                android:textSize="12sp"
+                tools:text="Dante 2018-12-24 19:33"
+
+            />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

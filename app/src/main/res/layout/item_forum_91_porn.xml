@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/item_background"
+              android:foreground="?attr/selectableItemBackground"
+              android:orientation="vertical"
+              android:padding="@dimen/activity_vertical_margin">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_item_forum_91_porn_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:minLines="1"
+        android:textColor="@color/item_91pron_title_text_color"
+        android:textSize="16sp"
+        tools:text="hhhhhhhhhhhhh长长的標題啊啊啊啊啊啊"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_item_forum_91_porn_reply_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:paddingLeft="2dp"
+            android:textColor="@color/item_91pron_info_text_color"
+            android:textSize="14sp"
+            tools:text="28/9213545"
+        />
+
+        <TextView
+            android:id="@+id/tv_item_forum_91_porn_author_publish_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/item_91pron_info_text_color"
+            android:textSize="14sp"
+            tools:text="Dante 2018-12-25 23:23"/>
+
+        <TextView
+            android:id="@+id/tv_item_forum_91_porn_last_post_author_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:paddingRight="2dp"
+            android:textColor="@color/item_91pron_info_text_color"
+            android:textSize="14sp"
+            android:visibility="gone"/>
+    </LinearLayout>
+</LinearLayout>
