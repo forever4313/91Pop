@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/common_background"
               android:orientation="vertical"
-              tools:context="com.u91porn.ui.pigav.playpigav.PlayPigAvActivity">
+              tools:context="com.dante.ui.pigav.playpigav.PlayPigAvActivity">
 
     <FrameLayout
         android:id="@+id/play_container"

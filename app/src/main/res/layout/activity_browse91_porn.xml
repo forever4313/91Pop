@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.u91porn.ui.porn91forum.browse91porn.Browse91PornActivity">
+    tools:context="com.dante.ui.porn91forum.browse91porn.Browse91PornActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"

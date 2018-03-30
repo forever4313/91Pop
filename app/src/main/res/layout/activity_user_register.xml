@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/common_background"
               android:orientation="vertical"
-              tools:context="com.u91porn.ui.user.UserLoginActivity">
+              tools:context="com.dante.ui.user.UserLoginActivity">
 
     <include layout="@layout/layout_toolbar"/>
 

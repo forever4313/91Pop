@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.u91porn.ui.upload.UploadVideoActivity">
+    tools:context="com.dante.ui.upload.UploadVideoActivity">
 
 </android.support.constraint.ConstraintLayout>

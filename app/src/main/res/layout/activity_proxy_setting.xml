@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:background="@color/common_background"
               android:orientation="vertical"
-              tools:context="com.u91porn.ui.proxy.ProxySettingActivity">
+              tools:context="com.dante.ui.proxy.ProxySettingActivity">
 
     <include layout="@layout/layout_toolbar"/>
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
 
-    <com.u91porn.widget.IpInputEditText
+    <com.dante.widget.IpInputEditText
         android:id="@+id/et_dialog_proxy_setting_ip_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

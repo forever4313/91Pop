@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.u91porn"
+<manifest package="com.dante"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -12,14 +12,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
-        android:name=".MyApplication"
+        android:name="com.dante.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/QMUITheme">
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.dante.ui.splash.SplashActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -30,97 +30,97 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.dante.ui.main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.download.DownloadActivity"
+            android:name="com.dante.ui.download.DownloadActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/my_download"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.favorite.FavoriteActivity"
+            android:name="com.dante.ui.favorite.FavoriteActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/my_collect"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.user.UserLoginActivity"
+            android:name="com.dante.ui.user.UserLoginActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/title_user_login"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.user.UserRegisterActivity"
+            android:name="com.dante.ui.user.UserRegisterActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/title_user_register"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.upload.UploadVideoActivity"
+            android:name="com.dante.ui.upload.UploadVideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.history.HistoryActivity"
+            android:name="com.dante.ui.history.HistoryActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/history_views"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.about.AboutActivity"
+            android:name="com.dante.ui.about.AboutActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/about_me"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.porn91video.play.ExoMediaPlayerActivity"
+            android:name="com.dante.ui.porn91video.play.ExoMediaPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.porn91video.play.JiaoZiVideoPlayerActivity"
+            android:name="com.dante.ui.porn91video.play.JiaoZiVideoPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.porn91video.search.SearchActivity"
+            android:name="com.dante.ui.porn91video.search.SearchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.porn91video.author.AuthorActivity"
+            android:name="com.dante.ui.porn91video.author.AuthorActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/title_author_video"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.setting.SettingActivity"
+            android:name="com.dante.ui.setting.SettingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/title_setting"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.proxy.ProxySettingActivity"
+            android:name="com.dante.ui.proxy.ProxySettingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/activity_proxy_setting"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.porn91forum.browse91porn.Browse91PornActivity"
+            android:name="com.dante.ui.porn91forum.browse91porn.Browse91PornActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/forum_content"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ui.images.viewimage.PictureViewerActivity"
+            android:name="com.dante.ui.images.viewimage.PictureViewerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/photo"
             android:theme="@style/ViewerTheme.TransNav"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.pigav.playpigav.PlayPigAvActivity"
+            android:name="com.dante.ui.pigav.playpigav.PlayPigAvActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/pig_av"
             android:screenOrientation="portrait"/>
 
-        <service android:name=".service.UpdateDownloadService"/>
-        <service android:name=".service.DownloadVideoService"/>
+        <service android:name="com.dante.service.UpdateDownloadService"/>
+        <service android:name="com.dante.service.DownloadVideoService"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.u91porn.fileprovider"
+            android:authorities="com.dante.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:background="@color/common_background"
               android:orientation="vertical"
-              tools:context="com.u91porn.ui.download.DownloadActivity">
+              tools:context="com.dante.ui.download.DownloadActivity">
 
     <include layout="@layout/layout_toolbar"/>
 

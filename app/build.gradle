@@ -4,11 +4,11 @@ apply plugin: 'com.bugsnag.android.gradle' // apply on last line
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.u91porn"
+        applicationId "com.dante.91pop"
         minSdkVersion 19
-        targetSdkVersion 26
-        versionCode 16
-        versionName "1.1.5"
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -27,7 +27,7 @@ android {
 
 greendao {
     schemaVersion 7//数据库版本号
-    daoPackage 'com.u91porn.data.db.dao'//设置DaoMaster、DaoSession、Dao包名
+    daoPackage 'com.dante.data.db.dao'//设置DaoMaster、DaoSession、Dao包名
     targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
 }
 

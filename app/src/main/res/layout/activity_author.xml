@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_background"
-    tools:context="com.u91porn.ui.porn91video.author.AuthorActivity">
+    tools:context="com.dante.ui.porn91video.author.AuthorActivity">
 
     <include layout="@layout/layout_toolbar"/>
 

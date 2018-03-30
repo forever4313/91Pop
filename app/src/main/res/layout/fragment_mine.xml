@@ -5,11 +5,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="?actionBarSize"
                 android:background="@color/white"
-                tools:context="com.u91porn.ui.mine.MineFragment">
+                tools:context="com.dante.ui.mine.MineFragment">
 
     <include layout="@layout/layout_mine_header"/>
 
-    <com.u91porn.widget.ObservableScrollView
+    <com.dante.widget.ObservableScrollView
         android:id="@+id/ov_setting_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,5 +22,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </com.u91porn.widget.ObservableScrollView>
+    </com.dante.widget.ObservableScrollView>
 </RelativeLayout>

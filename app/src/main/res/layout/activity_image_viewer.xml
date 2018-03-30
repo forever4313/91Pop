@@ -3,9 +3,9 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.u91porn.ui.images.viewimage.PictureViewerActivity">
+                tools:context="com.dante.ui.images.viewimage.PictureViewerActivity">
 
-    <com.u91porn.widget.ProblematicViewPager
+    <com.dante.widget.ProblematicViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
