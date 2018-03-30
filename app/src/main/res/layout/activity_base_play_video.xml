@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_background"
@@ -114,11 +115,13 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/colorPrimary"
         app:backgroundTint="@color/floating_action_button_tine_bg_color"
-        app:layout_behavior="@string/scale_down_show_behavior"
+        app:layout_anchor="@id/recyclerView_video_comment"
+        app:layout_anchorGravity="end|bottom"
+        android:visibility="invisible"
+        app:layout_behavior="@string/fab_behavior"
         app:srcCompat="@drawable/ic_add_black_24dp"/>
 
     <LinearLayout
@@ -127,7 +130,8 @@
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="end|bottom"
         android:background="@color/common_background"
-        android:scaleX="0">
+        android:scaleX="0"
+        android:scaleY="1">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_video_comment"

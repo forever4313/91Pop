@@ -1,5 +1,7 @@
 package com.u91porn.ui.porn91video.play;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -7,8 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
@@ -16,6 +21,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +83,8 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
     protected DataManager dataManager;
     @BindView(R.id.recyclerView_video_comment)
     RecyclerView recyclerViewVideoComment;
+    @BindView(R.id.root)
+    CoordinatorLayout root;
     @BindView(R.id.floatingToolbar)
     FloatingToolbar floatingToolbar;
     @BindView(R.id.fab)
@@ -123,6 +131,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         setVideoViewHeight(videoplayerContainer);
         initPlayerView();
         unLimit91PornItem = (UnLimit91PornItem) getIntent().getSerializableExtra(Keys.KEY_INTENT_UNLIMIT91PORNITEM);
+        TransitionManager.beginDelayedTransition(root);
 
         initListener();
         initDialog();
@@ -318,7 +327,6 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
     }
 
     private void initVideoComments() {
-
         List<VideoComment> videoCommentList = new ArrayList<>();
         videoCommentAdapter = new VideoCommentAdapter(this, R.layout.item_video_comment, videoCommentList);
 
@@ -348,24 +356,30 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
                     showCommentLayout(0);
                 }
                 isComment = false;
-//                videoCommentAdapter.setClickPosition(position);
-//                videoCommentAdapter.notifyDataSetChanged();
                 videoComment = (VideoComment) adapter.getData().get(position);
                 etVideoComment.setHint("回复：" + videoComment.getuName());
             }
         });
+    }
 
+    private void showCommentLayout(int delay) {
+        if (!commentLayoutShown) {
+            etCommentInputLayout.animate().scaleX(1).setInterpolator(new LinearOutSlowInInterpolator()).setStartDelay(delay).setListener(null).start();
+            fab.animate().scaleX(0).scaleY(0).start();
+            fab.show();
+        }
+        commentLayoutShown = true;
     }
 
     private void hideCommentLayout() {
         if (commentLayoutShown) {
-            etCommentInputLayout.animate().scaleX(0).start();
-            new Handler().postDelayed(new Runnable() {
+            etCommentInputLayout.animate().scaleX(0).setInterpolator(new FastOutLinearInInterpolator()).setListener(new AnimatorListenerAdapter() {
                 @Override
-                public void run() {
-                    fab.show();
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    fab.animate().scaleY(1).scaleX(1).start();
                 }
-            }, 400);
+            }).start();
         }
         commentLayoutShown = false;
     }
@@ -482,6 +496,12 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         }
         videoCommentAdapter.setNewData(videoCommentList);
         commentSwipeRefreshLayout.setEnabled(true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.show();
+            }
+        }, 300);
     }
 
     @Override
@@ -619,8 +639,13 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             shareVideoUrl();
             return true;
         } else if (id == R.id.menu_play_comment) {
-//            showMessage("向下滑动即可评论", TastyToast.INFO);
-            showCommentLayout(400);
+            showCommentLayout(0);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    fab.animate().scaleX(0).scaleY(0).start();
+                }
+            }, 500);
             return true;
         } else if (id == R.id.menu_play_close) {
             floatingToolbar.hide();
@@ -630,14 +655,6 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         return super.onOptionsItemSelected(item);
     }
 
-    private void showCommentLayout(int delay) {
-        if (!commentLayoutShown) {
-//            fab.animate().yBy(-256).start();
-            etCommentInputLayout.animate().scaleX(1).setStartDelay(delay).start();
-            fab.hide();
-        }
-        commentLayoutShown = true;
-    }
 
     private void startDownloadVideo() {
         boolean isDownloadNeedWifi = dataManager.isDownloadVideoNeedWifi();

@@ -133,7 +133,7 @@
             android:layout_margin="@dimen/fab_margin"
             android:tint="@color/colorPrimary"
             app:backgroundTint="@color/floating_action_button_tine_bg_color"
-            app:layout_behavior="@string/scale_down_show_behavior"
+            app:layout_behavior="@string/fab_behavior"
             app:srcCompat="@drawable/ic_add_black_24dp"/>
 
         <LinearLayout
