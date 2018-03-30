@@ -4,14 +4,14 @@ import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
-import com.orhanobut.logger.Logger;
-import com.trello.rxlifecycle2.LifecycleProvider;
 import com.dante.data.model.UpdateVersion;
 import com.dante.rxjava.CallBackWrapper;
 import com.dante.ui.update.UpdatePresenter;
 import com.dante.utils.AppCacheUtils;
 import com.dante.utils.GlideApp;
+import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
+import com.orhanobut.logger.Logger;
+import com.trello.rxlifecycle2.LifecycleProvider;
 
 import java.io.File;
 import java.util.List;
@@ -172,7 +172,7 @@ public class AboutPresenter extends MvpBasePresenter<AboutView> implements IAbou
                         ifViewAttached(new ViewAction<AboutView>() {
                             @Override
                             public void run(@NonNull AboutView view) {
-                                view.countCacheFileSizeError("计算缓存大小失败了");
+                                view.countCacheFileSizeError("计算缓存大小失败");
                             }
                         });
                     }

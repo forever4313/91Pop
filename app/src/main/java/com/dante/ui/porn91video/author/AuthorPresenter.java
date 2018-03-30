@@ -87,7 +87,6 @@ public class AuthorPresenter extends MvpBasePresenter<AuthorView> implements IAu
                                     view.loadMoreDataComplete();
                                     view.setMoreData(unLimit91PornItems);
                                 }
-                                //已经最后一页了
                                 if (page >= totalPage) {
                                     view.noMoreData();
                                 } else {
@@ -100,7 +99,6 @@ public class AuthorPresenter extends MvpBasePresenter<AuthorView> implements IAu
 
                     @Override
                     public void onError(final String msg, int code) {
-                        //首次加载失败，显示重试页
                         ifViewAttached(new ViewAction<AuthorView>() {
                             @Override
                             public void run(@NonNull AuthorView view) {

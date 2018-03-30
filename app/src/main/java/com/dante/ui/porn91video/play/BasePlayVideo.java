@@ -33,14 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.github.rubensousa.floatingtoolbar.FloatingToolbar;
-import com.helper.loadviewhelper.help.OnLoadViewListener;
-import com.helper.loadviewhelper.load.LoadViewHelper;
-import com.jaeger.library.StatusBarUtil;
-import com.orhanobut.logger.Logger;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.dante.R;
 import com.dante.adapter.VideoCommentAdapter;
 import com.dante.custom.TastyToast;
@@ -58,6 +50,14 @@ import com.dante.utils.DialogUtils;
 import com.dante.utils.LoadHelperUtils;
 import com.dante.utils.UserHelper;
 import com.dante.utils.constants.Keys;
+import com.github.rubensousa.floatingtoolbar.FloatingToolbar;
+import com.helper.loadviewhelper.help.OnLoadViewListener;
+import com.helper.loadviewhelper.load.LoadViewHelper;
+import com.jaeger.library.StatusBarUtil;
+import com.orhanobut.logger.Logger;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -196,7 +196,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             return;
         }
         if (unLimit91PornItem.getVideoResultId() == 0) {
-            showMessage("视频还未解析完成，无法评论", TastyToast.INFO);
+            showMessage("视频还未解析完成，无法评论", TastyToast.WARNING);
             return;
         }
         String vid = unLimit91PornItem.getVideoResult().getVideoId();
@@ -206,7 +206,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             presenter.commentVideo(comment, uid, vid, unLimit91PornItem.getViewKey());
         } else {
             if (videoComment == null) {
-                showMessage("请先点击需要回复的评论", TastyToast.INFO);
+                showMessage("请先点击需要回复的评论", TastyToast.WARNING);
                 return;
             }
             commentVideoDialog.show();
@@ -254,11 +254,11 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             public void onClick(View v) {
                 if (!UserHelper.isUserInfoComplete(user)) {
                     goToLogin();
-                    showMessage("请先登录", TastyToast.INFO);
+                    showMessage("请先登录", TastyToast.WARNING);
                     return;
                 }
                 if (unLimit91PornItem.getVideoResultId() == 0) {
-                    showMessage("视频还未解析成功", TastyToast.INFO);
+                    showMessage("视频还未解析成功", TastyToast.WARNING);
                     return;
                 }
                 Intent intent = new Intent(BasePlayVideo.this, AuthorActivity.class);
@@ -351,13 +351,16 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
                     floatingToolbar.hide();
                 }
                 if (commentLayoutShown) {
-                    hideCommentLayout();
+                    if (videoCommentAdapter.getClickPosition() == position) {
+                        hideCommentLayout();
+                    }
                 } else {
                     showCommentLayout(0);
                 }
                 isComment = false;
                 videoComment = (VideoComment) adapter.getData().get(position);
                 etVideoComment.setHint("回复：" + videoComment.getuName());
+                videoCommentAdapter.setClickPosition(position);
             }
         });
     }
@@ -454,10 +457,10 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
     private void showWatchDownloadVideoTipDialog() {
         QMUIDialog.MessageDialogBuilder builder = new QMUIDialog.MessageDialogBuilder(this);
         builder.setTitle("温馨提示");
-        builder.setMessage("1. 通常你无法在线观看视频就意味着你也无法下载视频，所以如果你不能在线观看视频就不要想着下载了再看了，那样绝大多数时候都是不能下载的；\n" +
-                "2. 如果在线观看速度慢可以选择先下载后再观看，因为是多线程下载，有时候能够比在线观看要快；\n" +
-                "3. 如果想要更好的在线观看和下载体验，目前最好的办法就是挂代理（非设置中的HTTP代理）；\n" +
-                "4. 点击作者名字可查看该作者其他视频（需要登录帐号）。");
+        builder.setMessage("1. 通常无法在线观看视频就意味着你也无法下载视频\n" +
+                "2. 若在线观看速度慢可以选择下载后再观看，有时候比在线观看要快\n" +
+                "3. 如果想要更好的观看和下载，请使用VPN（不是设置中的HTTP代理）；\n" +
+                "4. 点击作者名字可查看该作者其他视频（需登录）");
         builder.addAction("我知道了", new QMUIDialogAction.ActionListener() {
             @Override
             public void onClick(QMUIDialog dialog, int index) {
@@ -479,7 +482,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         dismissDialog();
         isVideoError = true;
         helper.showError();
-        LoadHelperUtils.setErrorText(helper.getLoadError(), R.id.tv_error_text, "解析视频地址失败了，点击重试");
+        LoadHelperUtils.setErrorText(helper.getLoadError(), R.id.tv_error_text, "解析视频地址失败，点击重试");
         showMessage(errorMessage, TastyToast.ERROR);
     }
 
@@ -525,7 +528,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
     public void loadVideoCommentError(String message) {
         isVideoError = false;
         helper.showError();
-        LoadHelperUtils.setErrorText(helper.getLoadError(), R.id.tv_error_text, "加载评论失败了，点击重试");
+        LoadHelperUtils.setErrorText(helper.getLoadError(), R.id.tv_error_text, "加载评论失败，点击重试");
         //showMessage(message, TastyToast.Error);
     }
 
@@ -665,7 +668,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
 
     private void favoriteVideo() {
         if (unLimit91PornItem == null || unLimit91PornItem.getVideoResultId() == 0) {
-            showMessage("还未成功解析视频链接，不能收藏！", TastyToast.INFO);
+            showMessage("解析完视频才能收藏哦", TastyToast.WARNING);
             return;
         }
         VideoResult videoResult = unLimit91PornItem.getVideoResult();
@@ -675,7 +678,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             return;
         }
         if (Integer.parseInt(videoResult.getOwnnerId()) == user.getUserId()) {
-            showMessage("不能收藏自己的视频", TastyToast.WARNING);
+            showMessage("不能收藏自己的视频哦", TastyToast.INFO);
             return;
         }
         favoriteDialog.show();
@@ -684,12 +687,12 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
 
     private void shareVideoUrl() {
         if (unLimit91PornItem == null || unLimit91PornItem.getVideoResultId() == 0) {
-            showMessage("还未成功解析视频链接，不能分享！", TastyToast.INFO);
+            showMessage("解析完视频才能分享哦", TastyToast.WARNING);
             return;
         }
         String url = unLimit91PornItem.getVideoResult().getVideoUrl();
         if (TextUtils.isEmpty(url)) {
-            showMessage("还未成功解析视频链接，不能分享！", TastyToast.INFO);
+            showMessage("解析完视频才能分享哦", TastyToast.WARNING);
             return;
         }
         Intent textIntent = new Intent(Intent.ACTION_SEND);

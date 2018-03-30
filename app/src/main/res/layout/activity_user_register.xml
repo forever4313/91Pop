@@ -12,11 +12,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
-
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="注意：切勿频繁重复注册，否则可能所有帐号均被删除，甚至封IP"
+            android:textColor="@color/colorPrimary"/>
         <EditText
             android:id="@+id/et_account"
             android:layout_width="match_parent"
@@ -63,7 +68,7 @@
                 android:id="@+id/et_captcha"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1000"
+                android:layout_weight="1"
                 android:hint="验证码"
                 android:maxLength="6"
                 android:singleLine="true"
@@ -71,8 +76,9 @@
 
             <ImageView
                 android:id="@+id/wb_captcha"
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
             />
         </LinearLayout>
 
@@ -81,26 +87,20 @@
             android:id="@+id/bt_user_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_selector"
-            android:text="注     册"
+            android:text="注 册"
             android:textColor="@color/common_always_white_text_color"
             android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Tips:新帐号注册成功后，前几次登录或打开可能会导致程序异常退出（解析错误，新帐号数据结构不一样），这个不打算去做兼容了，请多登录打开程序几次后即可,验证码是非必须的,加载不出随便填"
+            android:layout_marginTop="16dp"
+            android:lineSpacingMultiplier="1.1"
+            android:text="新帐号注册后，前几次登录或打开可能会导致程序异常退出，请多打开登录几次即可。验证码是可选的"
             android:textColor="@color/common_black_white_text_color"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="注意：切勿频繁重复注册，否则可能所有帐号均被删除，且封禁IP"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"/>
+
     </LinearLayout>
 
 </LinearLayout>

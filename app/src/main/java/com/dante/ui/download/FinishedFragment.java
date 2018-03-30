@@ -159,7 +159,7 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
             PackageManager pm = context.getPackageManager();
             ComponentName cn = intent.resolveActivity(pm);
             if (cn == null) {
-                showMessage("你手机上未安装任何可以播放此视频的播放器！", TastyToast.INFO);
+                showMessage("你手机上未安装任何可以播放此视频的播放器", TastyToast.WARNING);
                 return;
             }
             startActivity(intent);

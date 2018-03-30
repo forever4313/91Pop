@@ -1,6 +1,7 @@
 package com.dante.ui.about;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,13 +11,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.qmuiteam.qmui.util.QMUIPackageHelper;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
-import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import com.dante.R;
 import com.dante.custom.TastyToast;
 import com.dante.data.model.UpdateVersion;
@@ -25,6 +21,12 @@ import com.dante.ui.MvpActivity;
 import com.dante.ui.update.UpdatePresenter;
 import com.dante.utils.AppCacheUtils;
 import com.dante.utils.DialogUtils;
+import com.qmuiteam.qmui.util.QMUIPackageHelper;
+import com.qmuiteam.qmui.widget.QMUILoadingView;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
+import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -36,12 +38,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 /**
  * @author flymegoc
  */
 public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implements AboutView {
 
+    public static final String ALI_PAY = "aex00371u7j5qknwdj0yu11";
     private static final String TAG = AboutActivity.class.getSimpleName();
     @Inject
     protected UpdatePresenter updatePresenter;
@@ -58,6 +62,14 @@ public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implem
     private AlertDialog alertDialog;
     private AlertDialog cleanCacheDialog;
     private QMUICommonListItemView cleanCacheQMUICommonListItemView;
+
+    public static void donate(Activity activity) {
+        if (AlipayZeroSdk.hasInstalledAlipayClient(activity.getApplicationContext())) {
+            AlipayZeroSdk.startAlipayClient(activity, ALI_PAY);
+        } else {
+            Toast.makeText(activity, "未找到支付支付宝", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -88,6 +100,12 @@ public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implem
         cleanCacheQMUICommonListItemView.addAccessoryCustomView(loadingView);
 
         QMUIGroupListView.newSection(this)
+                .addItemView(mAboutGroupListView.createItemView(getResources().getString(R.string.donate)), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        donate(AboutActivity.this);
+                    }
+                })
                 .addItemView(mAboutGroupListView.createItemView(getResources().getString(R.string.about_item_homepage)), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -172,7 +190,7 @@ public class AboutActivity extends MvpActivity<AboutView, AboutPresenter> implem
             }
         }
         if (fileDirList.size() == 0) {
-            showMessage("未选择任何条目，无法清除缓存", TastyToast.INFO);
+            showMessage("未选择任何条目，无法清除缓存", TastyToast.WARNING);
             return;
         }
         presenter.cleanCacheFile(fileDirList, getApplicationContext());

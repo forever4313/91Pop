@@ -4,7 +4,7 @@ apply plugin: 'com.bugsnag.android.gradle' // apply on last line
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.dante.91pop"
+        applicationId "com.dante.porn"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
@@ -109,4 +109,6 @@ dependencies {
         exclude group: 'com.android.support'
     }
     implementation project(':exolibrary')
+    compile 'moe.feng:AlipayZeroSdk:1.1'
+
 }

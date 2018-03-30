@@ -142,7 +142,6 @@ public class UserLoginActivity extends MvpActivity<UserView, UserPresenter> impl
     }
 
     private void login(String username, String password, String captcha) {
-
         if (TextUtils.isEmpty(username)) {
             showMessage("请填写用户名", TastyToast.INFO);
             return;

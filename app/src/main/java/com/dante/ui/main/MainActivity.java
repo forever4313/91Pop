@@ -526,7 +526,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     private void goToSearchVideo() {
 
         if (!UserHelper.isUserInfoComplete(user)) {
-            showMessage("请先登录", TastyToast.INFO);
+            showMessage("请先登录", TastyToast.WARNING);
             Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
             intent.putExtra(Keys.KEY_INTENT_LOGIN_FOR_ACTION, UserLoginActivity.LOGIN_ACTION_FOR_SEARCH_91PRON_VIDEO);
             startActivityForResultWithAnimotion(intent, Constants.USER_LOGIN_REQUEST_CODE);

@@ -236,7 +236,7 @@ public class SettingActivity extends MvpActivity<SettingView, SettingPresenter> 
      */
     public void selectDownloadVideoDir(final QMUICommonListItemView qmuiCommonListItemView) {
         if (presenter.isHaveUnFinishDownloadVideo()) {
-            showMessage("当前有未下载完成视频，无法更改", TastyToast.INFO);
+            showMessage("当前有未下载完成视频，无法更改", TastyToast.WARNING);
             return;
         }
         FilePicker picker = new FilePicker(this, FilePicker.DIRECTORY);

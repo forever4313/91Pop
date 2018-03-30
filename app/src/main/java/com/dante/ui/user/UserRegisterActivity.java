@@ -130,7 +130,7 @@ public class UserRegisterActivity extends MvpActivity<UserView, UserPresenter> i
             return;
         }
         if (!passwordOne.equals(passwordTwo)) {
-            showMessage("密码不一致，请检查", TastyToast.INFO);
+            showMessage("密码不一致，请检查", TastyToast.WARNING);
             return;
         }
         QMUIKeyboardHelper.hideKeyboard(getCurrentFocus());

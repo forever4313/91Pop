@@ -101,7 +101,7 @@ public class ProxySettingActivity extends MvpActivity<ProxyView, ProxyPresenter>
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ProxyModel proxyModel = (ProxyModel) adapter.getItem(position);
                 if (proxyModel == null) {
-                    showMessage("数据出错了", TastyToast.INFO);
+                    showMessage("数据出错了", TastyToast.WARNING);
                     return;
                 }
                 proxyAdapter.setClickPosition(position);
@@ -170,7 +170,7 @@ public class ProxySettingActivity extends MvpActivity<ProxyView, ProxyPresenter>
 
     private void doSettingProxy() {
         if (!isTestSuccess) {
-            showMessage("未有成功测试的代理，无法设置", TastyToast.INFO);
+            showMessage("未有成功测试的代理，无法设置", TastyToast.WARNING);
             return;
         }
         presenter.exitTest();

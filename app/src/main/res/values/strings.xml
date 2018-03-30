@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">91Porn</string>
-
+    <string name="app_name">91视频学习</string>
     <string name="coming_soon">敬请期待&#8230;</string>
     <string name="hot">当前最热</string>
     <string name="recent_updates">最近更新</string>
@@ -31,8 +30,8 @@
     <string name="share">分享</string>
     <string name="close">关闭</string>
     <string name="comments">评论</string>
-    <string name="fab_behavior">com.u91porn.behavior.FABScrollBehavior</string>
-    <string name="bottom_behavior">com.u91porn.behavior.BottomBehavior</string>
+    <string name="fab_behavior">com.dante.behavior.FABScrollBehavior</string>
+    <string name="bottom_behavior">com.dante.behavior.BottomBehavior</string>
     <string name="comment_video_hint_tip">请勿灌水</string>
     <string name="about_item_homepage">建议/反馈</string>
     <string name="about_item_github">GitHub 项目</string>
@@ -88,4 +87,5 @@
     <string name="pig_av">PigAv</string>
     <string name="back">返回</string>
     <string name="sure">确定</string>
+    <string name="donate">捐贈</string>
 </resources>

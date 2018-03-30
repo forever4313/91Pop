@@ -187,7 +187,7 @@ public abstract class BaseFragment extends Fragment {
             startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.side_out_left);
         } else {
-            showMessage("无法获取宿主Activity", TastyToast.INFO);
+            showMessage("无法获取宿主Activity", TastyToast.WARNING);
         }
     }
 
