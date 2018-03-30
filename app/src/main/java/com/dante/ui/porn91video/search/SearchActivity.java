@@ -10,17 +10,16 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.dante.R;
+import com.dante.adapter.UnLimit91Adapter;
+import com.dante.custom.TastyToast;
+import com.dante.data.model.UnLimit91PornItem;
+import com.dante.ui.MvpActivity;
+import com.dante.utils.LoadHelperUtils;
 import com.helper.loadviewhelper.help.OnLoadViewListener;
 import com.helper.loadviewhelper.load.LoadViewHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.dante.custom.TastyToast;
-
-import com.dante.R;
-import com.dante.adapter.UnLimit91Adapter;
-import com.dante.data.model.UnLimit91PornItem;
-import com.dante.ui.MvpActivity;
-import com.dante.utils.LoadHelperUtils;
 
 import org.angmarch.views.NiceSpinner;
 import org.angmarch.views.NiceSpinnerAdapter;
@@ -114,9 +113,9 @@ public class SearchActivity extends MvpActivity<SearchView, SearchPresenter> imp
     private void showTipDialog() {
         new QMUIDialog.MessageDialogBuilder(this)
                 .setTitle("提示")
-                .setMessage("1 .普通用户搜索间隔时间10分钟,VIP搜索间隔时间10秒\n" +
-                        "2 .搜索视频标题显示不全，属于正常现象（官网就是如此）\n" +
-                        "3 .目前暂无办法破除搜索时间限制")
+                .setMessage("- 普通用户搜索间隔时间10分钟，VIP间隔10秒\n" +
+                        "- 搜索视频标题显示不全，属正常现象\n" +
+                        "- 目前无法破除搜索时间限制")
                 .addAction("知道了", new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {

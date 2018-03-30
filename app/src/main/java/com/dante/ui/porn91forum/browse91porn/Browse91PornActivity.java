@@ -138,7 +138,7 @@ public class Browse91PornActivity extends MvpActivity<Browse91View, Browse91Pres
         imageList = new ArrayList<>();
         boolean needShowTip = dataManager.isViewPorn91ForumContentShowTip();
         if (needShowTip) {
-            showTipDialog();
+//            showTipDialog();
         }
 
         fabFunction.setOnClickListener(new View.OnClickListener() {
