@@ -1,8 +1,10 @@
 ## 91Pop is a video study APP
 
-###Features：
+### Features：
 
-- Optimized on zhangxianjin's [91Porn](https://github.com/zhaoxianjin/91porn).
+- Based on zhangxianjin's [91Porn](https://github.com/zhaoxianjin/91porn).
+- Layout optimized & several bugs fixed.
+- No extra setting needed.
 - Including biology, psycology, physics study.
 - Material Design
 
