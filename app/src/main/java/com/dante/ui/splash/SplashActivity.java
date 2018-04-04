@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.orhanobut.logger.Logger;
 import com.dante.R;
 import com.dante.data.DataManager;
 import com.dante.data.model.User;
@@ -15,6 +14,7 @@ import com.dante.ui.main.MainActivity;
 import com.dante.ui.user.UserPresenter;
 import com.dante.utils.AddressHelper;
 import com.dante.utils.UserHelper;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
@@ -30,13 +30,10 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
     @Inject
     protected AddressHelper addressHelper;
-
     @Inject
     protected UserPresenter userPresenter;
-
     @Inject
     protected SplashPresenter splashPresenter;
-
     @Inject
     protected DataManager dataManager;
 
@@ -74,6 +71,7 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
     }
 
     private void startMain() {
+//        SystemClock.sleep(3000);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

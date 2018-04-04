@@ -6,11 +6,8 @@ import android.text.TextUtils;
 
 import com.bugsnag.android.Bugsnag;
 import com.bugsnag.android.Severity;
-import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
-import com.orhanobut.logger.Logger;
-import com.dante.custom.TastyToast;
-import com.trello.rxlifecycle2.LifecycleProvider;
 import com.dante.cookie.CookieManager;
+import com.dante.custom.TastyToast;
 import com.dante.data.DataManager;
 import com.dante.data.model.UnLimit91PornItem;
 import com.dante.data.model.VideoComment;
@@ -22,7 +19,11 @@ import com.dante.rxjava.RetryWhenProcess;
 import com.dante.rxjava.RxSchedulersHelper;
 import com.dante.ui.download.DownloadPresenter;
 import com.dante.ui.favorite.FavoritePresenter;
+import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
+import com.orhanobut.logger.Logger;
+import com.trello.rxlifecycle2.LifecycleProvider;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -124,6 +125,25 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
                 .retryWhen(new RetryWhenProcess(RetryWhenProcess.PROCESS_TIME))
                 .compose(RxSchedulersHelper.<List<VideoComment>>ioMainThread())
                 .compose(provider.<List<VideoComment>>bindUntilEvent(Lifecycle.Event.ON_STOP))
+                .map(new Function<List<VideoComment>, List<VideoComment>>() {
+                    @Override
+                    public List<VideoComment> apply(List<VideoComment> videoComments) throws Exception {
+                        List<VideoComment> newList=new ArrayList<>();
+                        for (VideoComment c : videoComments) {
+                            List<String> list = c.getCommentQuoteList();
+                            StringBuilder builder = new StringBuilder();
+                            for (int i = 0; i < list.size(); i++) {
+                                builder.append(list.get(i));
+                            }
+                            if (invalidComment(builder.toString())) {
+                                Logger.d("invalidComment " + builder.toString());
+                            }else {
+                                newList.add(c);
+                            }
+                        }
+                        return newList;
+                    }
+                })
                 .subscribe(new CallBackWrapper<List<VideoComment>>() {
                     @Override
                     public void onBegin(Disposable d) {
@@ -187,6 +207,10 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
                         });
                     }
                 });
+    }
+
+    private boolean invalidComment(String s) {
+        return s.contains("谢谢") | s.contains("加速") | s.length() <= 2;
     }
 
     @Override

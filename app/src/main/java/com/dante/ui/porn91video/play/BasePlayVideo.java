@@ -17,7 +17,6 @@ import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -33,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.dante.R;
 import com.dante.adapter.VideoCommentAdapter;
 import com.dante.custom.TastyToast;
@@ -132,7 +132,6 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         initPlayerView();
         unLimit91PornItem = (UnLimit91PornItem) getIntent().getSerializableExtra(Keys.KEY_INTENT_UNLIMIT91PORNITEM);
         TransitionManager.beginDelayedTransition(root);
-
         initListener();
         initDialog();
         initLoadHelper();
@@ -331,8 +330,29 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         videoCommentAdapter = new VideoCommentAdapter(this, R.layout.item_video_comment, videoCommentList);
 
         recyclerViewVideoComment.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewVideoComment.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+//        recyclerViewVideoComment.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerViewVideoComment.setAdapter(videoCommentAdapter);
+        videoCommentAdapter.setLoadMoreView(new LoadMoreView() {
+            @Override
+            public int getLayoutId() {
+                return R.layout.loading;
+            }
+
+            @Override
+            protected int getLoadingViewId() {
+                return R.id.loading;
+            }
+
+            @Override
+            protected int getLoadFailViewId() {
+                return R.id.loadFailed;
+            }
+
+            @Override
+            protected int getLoadEndViewId() {
+                return R.id.loadEnd;
+            }
+        });
         videoCommentAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -363,13 +383,22 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
                 videoCommentAdapter.setClickPosition(position);
             }
         });
+        recyclerViewVideoComment.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0)
+                    fab.hide();
+                else if (dy < -5)
+                    fab.show();
+            }
+        });
     }
 
     private void showCommentLayout(int delay) {
         if (!commentLayoutShown) {
             etCommentInputLayout.animate().scaleX(1).setInterpolator(new LinearOutSlowInInterpolator()).setStartDelay(delay).setListener(null).start();
-            fab.animate().scaleX(0).scaleY(0).start();
-            fab.show();
+            fab.hide();
         }
         commentLayoutShown = true;
     }
@@ -380,7 +409,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    fab.animate().scaleY(1).scaleX(1).start();
+                    fab.show();
                 }
             }).start();
         }
@@ -646,7 +675,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    fab.animate().scaleX(0).scaleY(0).start();
+                    fab.hide();
                 }
             }, 500);
             return true;

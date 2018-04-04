@@ -22,7 +22,7 @@ import java.util.List;
 public class ParseMeiZiTu {
     private static final String TAG = ParseMeiZiTu.class.getSimpleName();
 
-    public static BaseResult<List<MeiZiTu>> parseMeiZiTuList(String html, int page) {
+    public static BaseResult<List<MeiZiTu>> parseMzPosts(String html, int page) {
         BaseResult<List<MeiZiTu>> baseResult = new BaseResult<>();
         baseResult.setTotalPage(1);
         Document doc = Jsoup.parse(html);
@@ -73,13 +73,10 @@ public class ParseMeiZiTu {
         return baseResult;
     }
 
-    public static BaseResult<List<String>> parsePicturePage(String html) {
+    public static BaseResult<List<String>> parsePicturesOfPost(String html) {
         BaseResult<List<String>> baseResult = new BaseResult<>();
-
         Document doc = Jsoup.parse(html);
-
         Element pageElement = doc.getElementsByClass("pagenavi").first();
-
         Elements aElements = pageElement.select("a");
         int totalPage = 1;
         if (aElements != null && aElements.size() > 3) {

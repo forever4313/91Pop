@@ -15,8 +15,8 @@ public interface Api {
     String PORN91_VIDEO_DOMAIN_NAME = "http://91porn.com/";
     String PORN91_FORUM_DOMAIN_NAME = "http://f.91p11.space/";
     String PIGAV_DOMAIN_NAME = "pigav_domain_name";
-    String MEI_ZI_TU_DOMAIN_NAME = "mei_zi_tu_domain_name";
-    String MM_99_DOMAIN_NAME = "mm_99_domain_name";
+    String MEI_ZI_TU_DOMAIN_NAME = "http://www.meizitu.net/";
+    String MM_99_DOMAIN_NAME = "http://www.99mm.me/";
     String GUO_BAN_JIA_DOMAIN_NAME = "guo_ban_jia_domain_name";
     String XICI_DAILI_DOMAIN_NAME = "xici_daili_domain_name";
 }

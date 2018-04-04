@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/gray"
+              android:gravity="center"
+              android:padding="6dp">
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="@string/loading"
+            android:textColor="@color/common_always_white_text_color"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/loadFailed"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:text="@string/load_failed"
+        android:textColor="@color/common_primary_white_text_color"/>
+
+    <TextView
+        android:id="@+id/loadEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:text="没有更多数据"
+        android:textColor="@color/item_91pron_info_text_color"/>
+</LinearLayout>

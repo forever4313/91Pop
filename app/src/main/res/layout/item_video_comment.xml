@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent" android:layout_height="wrap_content"
-              android:background="@color/item_background"
+              android:background="@color/gray"
               android:foreground="?attr/selectableItemBackground"
               android:orientation="vertical"
               android:padding="8dp">
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:textColor="@color/item_91porn_comment_info_text_color"
+        android:textColor="@color/play_head_video_info_text_color"
         android:textSize="13sp"
         tools:text="| 广州   级别:1  积分:0   注册:1小时前   视频:0   粉丝:0   关注:0"
     />
@@ -23,7 +23,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:paddingLeft="8dp"
-        android:textColor="@color/item_91porn_comment_message_text_color"
+        android:textColor="@color/common_always_white_text_color"
         android:textSize="16sp"
         tools:text="在广州也能遇到这样的就好了 "
     />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:lines="1"
-        android:textColor="@color/item_91porn_comment_info_text_color"
+        android:textColor="@color/play_head_video_info_text_color"
         tools:text="44分钟前 by Dante"
     />
 </LinearLayout>

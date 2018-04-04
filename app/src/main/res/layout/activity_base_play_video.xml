@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_background"
+    android:background="@color/cardview_dark_background"
     tools:context="com.dante.ui.porn91video.play.BasePlayVideo">
 
     <android.support.design.widget.AppBarLayout
@@ -85,7 +85,11 @@
                     app:autoSizeTextType="uniform"
                     tools:text="注册:xxx天前  级别:1  积分:00000  视频:00   粉丝:00000  关注:0"/>
             </LinearLayout>
-
+            <FrameLayout
+                android:id="@+id/fl_load_holder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView_video_comment"
                 android:layout_width="match_parent"
@@ -95,12 +99,6 @@
         </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <FrameLayout
-        android:id="@+id/fl_load_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <com.github.rubensousa.floatingtoolbar.FloatingToolbar
         android:id="@+id/floatingToolbar"
@@ -115,13 +113,10 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/colorPrimary"
         app:backgroundTint="@color/floating_action_button_tine_bg_color"
-        app:layout_anchor="@id/recyclerView_video_comment"
-        app:layout_anchorGravity="end|bottom"
-        android:visibility="invisible"
-        app:layout_behavior="@string/fab_behavior"
         app:srcCompat="@drawable/ic_add_black_24dp"/>
 
     <LinearLayout

@@ -13,20 +13,17 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleTextColor="@color/common_always_white_text_color">
+        app:titleTextColor="@color/common_always_white_text_color"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
             <android.support.v7.widget.SearchView
                 android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/nice_spinner_search"/>
-
+                android:layout_toStartOf="@+id/nice_spinner_search"/>
             <org.angmarch.views.NiceSpinner
                 android:id="@+id/nice_spinner_search"
                 android:layout_width="wrap_content"

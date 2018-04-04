@@ -1,11 +1,13 @@
 package com.dante.ui.download;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,21 +15,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.aitsuki.swipe.SwipeItemLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.liulishuo.filedownloader.BaseDownloadTask;
-import com.liulishuo.filedownloader.FileDownloadConnectListener;
-import com.liulishuo.filedownloader.FileDownloader;
-import com.liulishuo.filedownloader.model.FileDownloadStatus;
-import com.orhanobut.logger.Logger;
-import com.dante.custom.TastyToast;
 import com.dante.R;
 import com.dante.adapter.DownloadVideoAdapter;
+import com.dante.custom.TastyToast;
 import com.dante.data.DataManager;
 import com.dante.data.model.UnLimit91PornItem;
 import com.dante.service.DownloadVideoService;
 import com.dante.ui.MvpFragment;
 import com.dante.utils.DownloadManager;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadConnectListener;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.model.FileDownloadStatus;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +103,7 @@ public class DownloadingFragment extends MvpFragment<DownloadView, DownloadPrese
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         mUnLimit91PornItemList = new ArrayList<>();
-        mDownloadAdapter = new DownloadVideoAdapter(R.layout.item_right_menu_delete_download, mUnLimit91PornItemList);
+        mDownloadAdapter = new DownloadVideoAdapter(R.layout.item_unlimit_91porn_download, mUnLimit91PornItemList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.getItemAnimator().setChangeDuration(0);
@@ -110,6 +111,7 @@ public class DownloadingFragment extends MvpFragment<DownloadView, DownloadPrese
         mDownloadAdapter.setEmptyView(R.layout.empty_view, recyclerView);
 
         mDownloadAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 UnLimit91PornItem unLimit91PornItem = (UnLimit91PornItem) adapter.getItem(position);
@@ -117,12 +119,7 @@ public class DownloadingFragment extends MvpFragment<DownloadView, DownloadPrese
                     return;
                 }
                 Logger.t(TAG).d("当前状态：" + unLimit91PornItem.getStatus());
-                if (view.getId() == R.id.right_menu_delete) {
-                    SwipeItemLayout swipeItemLayout = (SwipeItemLayout) view.getParent();
-                    swipeItemLayout.close();
-                    presenter.deleteDownloadingTask(unLimit91PornItem);
-                    presenter.loadDownloadingData();
-                } else if (view.getId() == R.id.iv_download_control) {
+                if (view.getId() == R.id.iv_download_control) {
                     if (FileDownloader.getImpl().isServiceConnected()) {
                         if (unLimit91PornItem.getStatus() == FileDownloadStatus.progress) {
                             FileDownloader.getImpl().pause(unLimit91PornItem.getDownloadId());
@@ -138,6 +135,22 @@ public class DownloadingFragment extends MvpFragment<DownloadView, DownloadPrese
                 }
             }
         });
+        mDownloadAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                final UnLimit91PornItem unLimit91PornItem = (UnLimit91PornItem) adapter.getItem(position);
+                if (unLimit91PornItem == null) return false;
+                new AlertDialog.Builder(context).setMessage("刪除此任务？").setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.deleteDownloadingTask(unLimit91PornItem);
+                        presenter.loadDownloadingData();
+                    }
+                }).show();
+                return true;
+            }
+        });
+
 
     }
 

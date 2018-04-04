@@ -19,17 +19,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.aitsuki.swipe.SwipeItemLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.liulishuo.filedownloader.BaseDownloadTask;
-import com.dante.custom.TastyToast;
 import com.dante.R;
 import com.dante.adapter.DownloadVideoAdapter;
+import com.dante.custom.TastyToast;
 import com.dante.data.DataManager;
 import com.dante.data.model.UnLimit91PornItem;
 import com.dante.service.DownloadVideoService;
 import com.dante.ui.MvpFragment;
 import com.dante.utils.DownloadManager;
+import com.liulishuo.filedownloader.BaseDownloadTask;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -81,9 +80,8 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-
         List<UnLimit91PornItem> mUnLimit91PornItemList = new ArrayList<>();
-        mDownloadAdapter = new DownloadVideoAdapter(R.layout.item_right_menu_delete_download, mUnLimit91PornItemList);
+        mDownloadAdapter = new DownloadVideoAdapter(R.layout.item_unlimit_91porn_download, mUnLimit91PornItemList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mDownloadAdapter);
@@ -95,21 +93,24 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
                 openMp4File(unLimit91PornItem);
             }
         });
-        mDownloadAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mDownloadAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                UnLimit91PornItem unLimit91PornItem = (UnLimit91PornItem) adapter.getItem(position);
-                if (view.getId() == R.id.right_menu_delete && unLimit91PornItem != null) {
-                    SwipeItemLayout swipeItemLayout = (SwipeItemLayout) view.getParent();
-                    swipeItemLayout.close();
-                    File file = new File(unLimit91PornItem.getDownLoadPath(dataManager));
-                    if (file.exists()) {
-                        showDeleteFileDialog(unLimit91PornItem);
-                    } else {
-                        presenter.deleteDownloadedTask(unLimit91PornItem, false);
-                        presenter.loadFinishedData();
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                final UnLimit91PornItem unLimit91PornItem = (UnLimit91PornItem) adapter.getItem(position);
+                if (unLimit91PornItem == null) return false;
+                new AlertDialog.Builder(context).setMessage("刪除此任务？").setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        File file = new File(unLimit91PornItem.getDownLoadPath(dataManager));
+                        if (file.exists()) {
+                            showDeleteFileDialog(unLimit91PornItem);
+                        } else {
+                            presenter.deleteDownloadedTask(unLimit91PornItem, false);
+                            presenter.loadFinishedData();
+                        }
                     }
-                }
+                }).show();
+                return true;
             }
         });
         presenter.loadFinishedData();
@@ -117,16 +118,15 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
 
     private void showDeleteFileDialog(final UnLimit91PornItem unLimit91PornItem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("提示");
-        builder.setMessage("是否连同删除本地文件？");
-        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+        builder.setMessage("是否删除本地文件？");
+        builder.setNegativeButton("不用了", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 presenter.deleteDownloadedTask(unLimit91PornItem, false);
                 presenter.loadFinishedData();
             }
         });
-        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 presenter.deleteDownloadedTask(unLimit91PornItem, true);
@@ -146,7 +146,7 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
         if (file.exists()) {
             Uri uri;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.u91porn.fileprovider", file);
+                uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.dante.fileprovider", file);
             } else {
                 uri = Uri.fromFile(file);
             }
@@ -159,7 +159,7 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
             PackageManager pm = context.getPackageManager();
             ComponentName cn = intent.resolveActivity(pm);
             if (cn == null) {
-                showMessage("你手机上未安装任何可以播放此视频的播放器", TastyToast.WARNING);
+                showMessage("未安装可播放此视频的播放器", TastyToast.WARNING);
                 return;
             }
             startActivity(intent);
@@ -171,7 +171,6 @@ public class FinishedFragment extends MvpFragment<DownloadView, DownloadPresente
 
     private void showReDownloadFileDialog(final UnLimit91PornItem unLimit91PornItem) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("提示");
         builder.setMessage("文件不存在，重新下载？");
         builder.setNegativeButton("取消", null);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {

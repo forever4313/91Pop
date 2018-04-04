@@ -517,8 +517,8 @@ public class AppApiHelper implements ApiHelper {
                 })
                 .map(new Function<String, List<String>>() {
                     @Override
-                    public List<String> apply(String s) throws Exception {
-                        BaseResult<List<String>> baseResult = ParseMeiZiTu.parsePicturePage(s);
+                    public List<String> apply(String s) {
+                        BaseResult<List<String>> baseResult = ParseMeiZiTu.parsePicturesOfPost(s);
                         return baseResult.getData();
                     }
                 });
@@ -532,13 +532,13 @@ public class AppApiHelper implements ApiHelper {
         return cacheProviders.cacheWithLimitTime(mm99ServiceApi.imageList(url), dynamicKeyGroup, evictDynamicKeyGroup)
                 .map(new Function<Reply<String>, String>() {
                     @Override
-                    public String apply(Reply<String> stringReply) throws Exception {
+                    public String apply(Reply<String> stringReply) {
                         return stringReply.getData();
                     }
                 })
                 .map(new Function<String, BaseResult<List<Mm99>>>() {
                     @Override
-                    public BaseResult<List<Mm99>> apply(String s) throws Exception {
+                    public BaseResult<List<Mm99>> apply(String s) {
                         return Parse99Mm.parse99MmList(s, page);
                     }
                 });
@@ -679,7 +679,7 @@ public class AppApiHelper implements ApiHelper {
                 .map(new Function<String, BaseResult<List<MeiZiTu>>>() {
                     @Override
                     public BaseResult<List<MeiZiTu>> apply(String s) throws Exception {
-                        return ParseMeiZiTu.parseMeiZiTuList(s, page);
+                        return ParseMeiZiTu.parseMzPosts(s, page);
                     }
                 });
     }

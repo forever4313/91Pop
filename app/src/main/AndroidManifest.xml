@@ -25,14 +25,15 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.dante.ui.main.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name="com.dante.ui.download.DownloadActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
@@ -107,8 +108,8 @@
             android:name="com.dante.ui.images.viewimage.PictureViewerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/photo"
-            android:theme="@style/ViewerTheme.TransNav"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ViewerTheme.TransNav"/>
         <activity
             android:name="com.dante.ui.pigav.playpigav.PlayPigAvActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
