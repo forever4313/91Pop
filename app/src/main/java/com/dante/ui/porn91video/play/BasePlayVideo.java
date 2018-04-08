@@ -375,7 +375,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
                         hideCommentLayout();
                     }
                 } else {
-                    showCommentLayout(0);
+                    showCommentLayout();
                 }
                 isComment = false;
                 videoComment = (VideoComment) adapter.getData().get(position);
@@ -395,9 +395,10 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         });
     }
 
-    private void showCommentLayout(int delay) {
+    private void showCommentLayout() {
         if (!commentLayoutShown) {
-            etCommentInputLayout.animate().scaleX(1).setInterpolator(new LinearOutSlowInInterpolator()).setStartDelay(delay).setListener(null).start();
+            etCommentInputLayout.setVisibility(View.VISIBLE);
+            etCommentInputLayout.animate().scaleX(1).setInterpolator(new LinearOutSlowInInterpolator()).setStartDelay(0).setListener(null).start();
             fab.hide();
         }
         commentLayoutShown = true;
@@ -409,6 +410,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
+                    etCommentInputLayout.setVisibility(View.GONE);
                     fab.show();
                 }
             }).start();
@@ -671,7 +673,7 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             shareVideoUrl();
             return true;
         } else if (id == R.id.menu_play_comment) {
-            showCommentLayout(0);
+            showCommentLayout();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

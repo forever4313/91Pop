@@ -27,7 +27,6 @@
         android:id="@+id/comment_swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_dark_background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout android:layout_width="match_parent"
@@ -93,8 +92,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView_video_comment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/common_background"/>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
@@ -124,7 +122,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="end|bottom"
-        android:background="@color/common_background"
         android:scaleX="0"
         android:scaleY="1">
 

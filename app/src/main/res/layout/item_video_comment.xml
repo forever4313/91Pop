@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:textColor="@color/play_head_video_info_text_color"
+        android:textColor="@color/qmui_config_color_gray_6"
         android:textSize="13sp"
         tools:text="| 广州   级别:1  积分:0   注册:1小时前   视频:0   粉丝:0   关注:0"
     />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:lines="1"
-        android:textColor="@color/play_head_video_info_text_color"
+        android:textColor="@color/LightGray"
         tools:text="44分钟前 by Dante"
     />
 </LinearLayout>
