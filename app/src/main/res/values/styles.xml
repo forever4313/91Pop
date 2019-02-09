@@ -89,10 +89,10 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowIsTranslucent">false</item>-->
     </style>
 
     <style name="sort_category_popuwindow_anim" parent="android:Animation">

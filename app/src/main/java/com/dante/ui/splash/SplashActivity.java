@@ -42,9 +42,6 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().getDecorView().setSystemUiVisibility(FULL_SCREEN_UI);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         //防止重复开启程序造成多次登录
         if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
             //结束你的activity
@@ -53,7 +50,9 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return;
         }
+
         setContentView(R.layout.activity_splash);
+        StatusBarUtil.setTransparentForImageViewInFragment(this,null);
         if (UserHelper.isUserInfoComplete(user)) {
             startMain();
         }
@@ -76,10 +75,10 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
 
     private void startMain() {
 //        SystemClock.sleep(3000);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//        finish();
+//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @NonNull
