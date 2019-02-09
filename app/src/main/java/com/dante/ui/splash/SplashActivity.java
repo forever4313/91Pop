@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.dante.R;
 import com.dante.data.DataManager;
@@ -14,6 +15,7 @@ import com.dante.ui.main.MainActivity;
 import com.dante.ui.user.UserPresenter;
 import com.dante.utils.AddressHelper;
 import com.dante.utils.UserHelper;
+import com.jaeger.library.StatusBarUtil;
 import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
@@ -40,7 +42,9 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(FULL_SCREEN_UI);
+//        getWindow().getDecorView().setSystemUiVisibility(FULL_SCREEN_UI);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         //防止重复开启程序造成多次登录
         if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
             //结束你的activity

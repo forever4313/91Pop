@@ -1,5 +1,4 @@
 <resources>
-
     <style name="QMUITheme" parent="QMUI.Compat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
