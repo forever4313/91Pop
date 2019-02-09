@@ -75,10 +75,10 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
 
     private void startMain() {
 //        SystemClock.sleep(3000);
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//        finish();
-//        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @NonNull
