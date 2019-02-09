@@ -311,12 +311,13 @@ public class AppPreferencesHelper implements PreferencesHelper {
     public String getCustomDownloadVideoDirPath() {
         String path = mPrefs.getString(KEY_SP_CUSTOM_DOWNLOAD_VIDEO_DIR_PATH, "");
         if (TextUtils.isEmpty(path)) {
-            return SDCardUtils.DOWNLOAD_VIDEO_PATH;
+            path = SDCardUtils.DOWNLOAD_VIDEO_PATH;
         }
-        if (path.endsWith("/")) {
-            return path;
+        if (!path.endsWith("/")) {
+            path = path + "/";
         }
-        return path + "/";
+        SDCardUtils.createVideoNomediaFile(path);
+        return path;
     }
 
     @Override

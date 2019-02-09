@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'com.bugsnag.android.gradle' // apply on last line
+
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "com.dante.porn"
-        minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 2
-        versionName "1.0.1"
+        applicationId "com.porn91"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -24,6 +25,7 @@ android {
         }
     }
 }
+
 
 greendao {
     schemaVersion 7//数据库版本号
@@ -110,5 +112,7 @@ dependencies {
     }
     implementation project(':exolibrary')
     implementation 'moe.feng:AlipayZeroSdk:1.1'
+    implementation 'com.devbrackets.android:exomedia:4.1.0'
+
 
 }
