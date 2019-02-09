@@ -27,5 +27,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.devbrackets.android:exomedia:4.1.0'
+    implementation 'com.devbrackets.android:exomedia:4.1.0'
 }
