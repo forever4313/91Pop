@@ -53,8 +53,8 @@ public class ParseMeiZiTu {
             meiZiTu.setWidth(width);
             String date = li.getElementsByClass("time").first().text();
             meiZiTu.setDate(date);
-            String viewCount = li.getElementsByClass("view").first().text();
-            meiZiTu.setViewCount(viewCount);
+//            String viewCount = li.getElementsByClass("view").first().text();
+//            meiZiTu.setViewCount(viewCount);
             meiZiTuList.add(meiZiTu);
         }
         Logger.t(TAG).d("size::" + meiZiTuList.size());

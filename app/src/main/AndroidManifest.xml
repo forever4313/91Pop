@@ -108,8 +108,7 @@
             android:name="com.dante.ui.images.viewimage.PictureViewerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/photo"
-            android:screenOrientation="portrait"
-            android:theme="@style/ViewerTheme.TransNav"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.dante.ui.pigav.playpigav.PlayPigAvActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"

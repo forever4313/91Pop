@@ -175,7 +175,11 @@ public class VideoListFragment extends MvpFragment<VideoListView, VideoListPrese
         skipPageRecyclerView.postDelayed(new Runnable() {
             @Override
             public void run() {
-                skipPageRecyclerView.smoothScrollToPosition(currentPage + 2);
+                try {
+                    skipPageRecyclerView.smoothScrollToPosition(currentPage + 2);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }, 200);
     }

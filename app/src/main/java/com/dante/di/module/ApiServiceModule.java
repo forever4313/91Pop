@@ -98,7 +98,7 @@ public class ApiServiceModule {
         builder.cookieJar(persistentCookieJar);
         builder.proxySelector(myProxySelector);
         //动态baseUrl
-        RetrofitUrlManager.getInstance().putDomain(Api.GITHUB_DOMAIN_NAME, Api.APP_GITHUB_DOMAIN);
+//        RetrofitUrlManager.getInstance().putDomain(Api.GITHUB_DOMAIN_NAME, Api.APP_GITHUB_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.MEI_ZI_TU_DOMAIN_NAME, Api.APP_MEIZITU_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.MM_99_DOMAIN_NAME, Api.APP_99_MM_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.XICI_DAILI_DOMAIN_NAME, Api.APP_PROXY_XICI_DAILI_DOMAIN);
@@ -119,7 +119,7 @@ public class ApiServiceModule {
     Retrofit providesRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(Api.APP_GITHUB_DOMAIN)
+                .baseUrl(Api.PORN91_VIDEO_DOMAIN_NAME)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
