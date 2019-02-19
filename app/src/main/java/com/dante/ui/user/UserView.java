@@ -1,5 +1,7 @@
 package com.dante.ui.user;
 
+import android.graphics.Bitmap;
+
 import com.dante.data.model.User;
 import com.dante.ui.BaseView;
 
@@ -17,4 +19,8 @@ public interface UserView extends BaseView {
     void registerSuccess(User user);
 
     void registerFailure(String message);
+
+    void loadCaptchaSuccess(Bitmap bitmap);
+
+    void loadCaptchaFailure(String errorMessage, int code);
 }

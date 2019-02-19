@@ -1,5 +1,7 @@
 package com.dante.data.network;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -63,6 +65,7 @@ import io.rx_cache2.EvictDynamicKey;
 import io.rx_cache2.EvictDynamicKeyGroup;
 import io.rx_cache2.EvictProvider;
 import io.rx_cache2.Reply;
+import okhttp3.ResponseBody;
 
 /**
  * @author flymegoc
@@ -373,6 +376,15 @@ public class AppApiHelper implements ApiHelper {
                         return baseResult.getData();
                     }
                 });
+    }
+    @Override
+    public Observable<Bitmap> porn9VideoLoginCaptcha() {
+        return noLimit91PornServiceApi.captcha().map(new Function<ResponseBody, Bitmap>() {
+            @Override
+            public Bitmap apply(ResponseBody responseBody) throws Exception {
+                return BitmapFactory.decodeStream(responseBody.byteStream());
+            }
+        });
     }
 
     @Override

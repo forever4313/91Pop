@@ -1,6 +1,7 @@
 package com.dante.ui.user;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.devbrackets.android.exomedia.util.ResourceUtil;
 import com.orhanobut.logger.Logger;
 import com.qmuiteam.qmui.util.QMUIKeyboardHelper;
 import com.dante.custom.TastyToast;
@@ -148,10 +150,7 @@ public class UserRegisterActivity extends MvpActivity<UserView, UserPresenter> i
      * 加载验证码，目前似乎是非必须，不填也是可以登录的
      */
     private void loadCaptcha() {
-        String url = addressHelper.getVideo91PornAddress() + "captcha2.php";
-        Logger.t(TAG).d("验证码链接：" + url);
-        Uri uri = Uri.parse(url);
-        GlideApp.with(this).load(uri).placeholder(R.drawable.placeholder).transition(new DrawableTransitionOptions().crossFade(300)).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(wbCaptcha);
+        presenter.loadCaptcha();
     }
 
     @Override
@@ -172,6 +171,12 @@ public class UserRegisterActivity extends MvpActivity<UserView, UserPresenter> i
         showMessage("注册成功", TastyToast.SUCCESS);
     }
 
+    @Override
+    public void registerFailure(String message) {
+        showMessage("注册失败", TastyToast.ERROR);
+
+    }
+
     /**
      * 注册成功，默认保存用户名和密码
      */
@@ -182,9 +187,16 @@ public class UserRegisterActivity extends MvpActivity<UserView, UserPresenter> i
     }
 
     @Override
-    public void registerFailure(String message) {
-        showMessage(message, TastyToast.ERROR);
+    public void loadCaptchaSuccess(Bitmap bitmap) {
+        wbCaptcha.setImageBitmap(bitmap);
     }
+
+    @Override
+    public void loadCaptchaFailure(String errorMessage, int code) {
+        wbCaptcha.setImageDrawable(ResourceUtil.getDrawable(this, R.drawable.ic_refresh));
+        showError("无法加载验证码,点击刷新重试");
+    }
+
 
     @Override
     public void showError(String message) {

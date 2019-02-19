@@ -1,5 +1,7 @@
 package com.dante.data.network;
 
+import android.graphics.Bitmap;
+
 import com.dante.data.model.BaseResult;
 import com.dante.data.model.Forum91PronItem;
 import com.dante.data.model.MeiZiTu;
@@ -50,6 +52,7 @@ public interface ApiHelper {
 
     Observable<List<UnLimit91PornItem>> deletePorn91MyFavoriteVideo(String rvid);
 
+    Observable<Bitmap> porn9VideoLoginCaptcha();
     Observable<User> userLoginPorn91Video(String username, String password, String captcha);
 
     Observable<User> userRegisterPorn91Video(String username, String password1, String password2, String email, String captchaInput);

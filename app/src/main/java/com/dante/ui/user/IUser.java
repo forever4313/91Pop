@@ -7,4 +7,6 @@ package com.dante.ui.user;
 
 public interface IUser extends IBaseUser {
     void register(String username, String password1, String password2, String email, String captchaInput);
+    void loadCaptcha();
+
 }

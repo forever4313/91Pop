@@ -1,5 +1,7 @@
 package com.dante.data;
 
+import android.graphics.Bitmap;
+
 import com.dante.data.db.DbHelper;
 import com.dante.data.model.BaseResult;
 import com.dante.data.model.Category;
@@ -180,6 +182,11 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<List<UnLimit91PornItem>> deletePorn91MyFavoriteVideo(String rvid) {
         return mApiHelper.deletePorn91MyFavoriteVideo(rvid);
+    }
+
+    @Override
+    public Observable<Bitmap> porn9VideoLoginCaptcha() {
+        return mApiHelper.porn9VideoLoginCaptcha();
     }
 
     @Override

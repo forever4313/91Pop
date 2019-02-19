@@ -3,6 +3,7 @@ package com.dante.data.network.apiservice;
 import com.dante.data.network.Api;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -211,4 +212,8 @@ public interface NoLimit91PornServiceApi {
     @Headers({"Domain-Name: " + Api.PORN91_VIDEO_DOMAIN_NAME})
     @GET("/uvideos.php")
     Observable<String> authorVideos(@Query("UID") String uid, @Query("type") String type, @Query("page") int page);
+
+    @Headers({"Domain-Name: " + Api.PORN91_VIDEO_DOMAIN_NAME})
+    @GET("/captcha.php")
+    Observable<ResponseBody> captcha();
 }
