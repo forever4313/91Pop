@@ -40,6 +40,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.dante.utils.constants.KeysActivityRequestResultCode.LOGIN_ACTION_FOR_GET_UID;
+import static com.dante.utils.constants.KeysActivityRequestResultCode.LOGIN_ACTION_FOR_LOOK_AUTHOR_VIDEO;
+import static com.dante.utils.constants.KeysActivityRequestResultCode.RESULT_CODE_FOR_REFRESH_GET_UID;
+import static com.dante.utils.constants.KeysActivityRequestResultCode.RESULT_FOR_LOOK_AUTHOR_VIDEO;
+
 /**
  * @author flymegoc
  */
@@ -226,6 +231,14 @@ public class UserLoginActivity extends MvpActivity<UserView, UserPresenter> impl
                 Intent intentSearch = new Intent(this, SearchActivity.class);
                 startActivityWithAnimotion(intentSearch);
                 finish();
+                break;
+            case LOGIN_ACTION_FOR_GET_UID:
+                setResult(RESULT_CODE_FOR_REFRESH_GET_UID);
+                onBackPressed();
+                break;
+            case LOGIN_ACTION_FOR_LOOK_AUTHOR_VIDEO:
+                setResult(RESULT_FOR_LOOK_AUTHOR_VIDEO);
+                onBackPressed();
                 break;
             default:
                 setResult(RESULT_OK);

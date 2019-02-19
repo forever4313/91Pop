@@ -11,6 +11,8 @@ public class Keys {
     public final static String KEY_INTENT_LOGIN_FOR_ACTION = "key_intent_login_for_action";
     public final static String KEY_INTENT_99_MM_ITEM = "key_intent_99_mm_item";
     public final static String KEY_INTENT_UNLIMIT91PORNITEM = "key_intent_unlimit91pornitem";
+    public final static String KEY_INTENT_CATEGORY_ITEM = "key_intent_category_item";
+
     public final static String KEY_INTENT_PIG_AV_ITEM = "key_intent_pig_av_item";
     public final static String KEY_INTENT_UID = "key_intent_uid";
     public final static String KEY_INTENT_BROWSE_FORUM_91_PORN_ITEM = "key_intent_browse_forum_91_porn_item";

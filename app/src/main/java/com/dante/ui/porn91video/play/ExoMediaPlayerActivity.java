@@ -33,7 +33,8 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
 
     @Override
     public void initPlayerView() {
-        View view = LayoutInflater.from(this).inflate(R.layout.playback_engine_exo_media, videoplayerContainer, true);
+        videoPlayerContainer.removeAllViews();
+        View view = LayoutInflater.from(this).inflate(R.layout.playback_engine_exo_media, videoPlayerContainer, true);
         videoPlayer = view.findViewById(R.id.video_view);
         videoControlsMobile = (ExoVideoControlsMobile) videoPlayer.getVideoControls();
         videoPlayer.setOnPreparedListener(this);
@@ -55,19 +56,7 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
         if (!TextUtils.isEmpty(thumImgUrl)) {
             GlideApp.with(this).load(Uri.parse(thumImgUrl)).transition(new DrawableTransitionOptions().crossFade(300)).into(videoPlayer.getPreviewImageView());
         }
-        //加载本地下载好的视频
-        if (unLimit91PornItem.getStatus() == FileDownloadStatus.completed) {
-            File downloadFile = new File(unLimit91PornItem.getDownLoadPath(dataManager));
-            if (downloadFile.exists()) {
-                videoPlayer.setVideoPath(downloadFile.getAbsolutePath());
-            } else {
-                String proxyUrl = httpProxyCacheServer.getProxyUrl(videoUrl);
-                videoPlayer.setVideoURI(Uri.parse(proxyUrl));
-            }
-        } else {
-            String proxyUrl = httpProxyCacheServer.getProxyUrl(videoUrl);
-            videoPlayer.setVideoURI(Uri.parse(proxyUrl));
-        }
+        videoPlayer.setVideoURI(Uri.parse(videoUrl));
         videoControlsMobile.setTitle(title);
     }
 
@@ -102,7 +91,9 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
 
     @Override
     protected void onDestroy() {
-        videoplayerContainer.removeView(videoPlayer);
+        if (videoPlayer.getParent() != null) {
+            videoPlayerContainer.removeView(videoPlayer);
+        }
         videoPlayer.release();
         super.onDestroy();
     }

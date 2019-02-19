@@ -112,4 +112,8 @@ public class AuthorPresenter extends MvpBasePresenter<AuthorView> implements IAu
                     }
                 });
     }
+    @Override
+    public boolean isUserLogin() {
+        return dataManager.isUserLogin();
+    }
 }

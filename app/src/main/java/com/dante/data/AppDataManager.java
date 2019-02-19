@@ -21,6 +21,7 @@ import com.dante.data.model.VideoComment;
 import com.dante.data.model.VideoResult;
 import com.dante.data.network.ApiHelper;
 import com.dante.data.prefs.PreferencesHelper;
+import com.dante.utils.UserHelper;
 
 import java.util.List;
 
@@ -41,12 +42,14 @@ public class AppDataManager implements DataManager {
     private final DbHelper mDbHelper;
     private final PreferencesHelper mPreferencesHelper;
     private final ApiHelper mApiHelper;
+    private  User user;
 
     @Inject
-    AppDataManager(DbHelper mDbHelper, PreferencesHelper mPreferencesHelper, ApiHelper mApiHelper) {
+    AppDataManager(DbHelper mDbHelper, PreferencesHelper mPreferencesHelper, ApiHelper mApiHelper, User user) {
         this.mDbHelper = mDbHelper;
         this.mPreferencesHelper = mPreferencesHelper;
         this.mApiHelper = mApiHelper;
+        this.user = user;
     }
 
     @Override
@@ -528,4 +531,16 @@ public class AppDataManager implements DataManager {
     public void setCustomDownloadVideoDirPath(String customDirPath) {
         mPreferencesHelper.setCustomDownloadVideoDirPath(customDirPath);
     }
+
+
+    @Override
+    public User getUser() {
+        return user;
+    }
+
+
+    @Override
+    public boolean isUserLogin() {
+        return UserHelper.isUserInfoComplete(user);    }
+
 }

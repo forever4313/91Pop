@@ -10,6 +10,7 @@ import com.dante.cookie.CookieManager;
 import com.dante.custom.TastyToast;
 import com.dante.data.DataManager;
 import com.dante.data.model.UnLimit91PornItem;
+import com.dante.data.model.User;
 import com.dante.data.model.VideoComment;
 import com.dante.data.model.VideoResult;
 import com.dante.di.PerActivity;
@@ -41,13 +42,14 @@ import io.reactivex.functions.Function;
 public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implements IPlay {
 
     private static final String TAG = PlayVideoPresenter.class.getSimpleName();
-    private final static int COMMENT_PER_PAGE_NUM = 20;
+
     private FavoritePresenter favoritePresenter;
     private DownloadPresenter downloadPresenter;
+
     private LifecycleProvider<Lifecycle.Event> provider;
+
     private int start = 1;
     private DataManager dataManager;
-
     private CookieManager cookieManager;
 
     @Inject
@@ -60,8 +62,8 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
     }
 
     @Override
-    public void loadVideoUrl(final UnLimit91PornItem unLimit91PornItem) {
-        String viewKey = unLimit91PornItem.getViewKey();
+    public void loadVideoUrl(final UnLimit91PornItem v9PornItem) {
+        String viewKey = v9PornItem.getViewKey();
         dataManager.loadPorn91VideoUrl(viewKey)
                 .map(new Function<VideoResult, VideoResult>() {
                     @Override
@@ -70,8 +72,8 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
                             if (VideoResult.OUT_OF_WATCH_TIMES.equals(videoResult.getId())) {
                                 //尝试强行重置，并上报异常
                                 cookieManager.resetPorn91VideoWatchTiem(true);
-                                Bugsnag.notify(new Throwable(TAG + ":ten videos each day "), Severity.WARNING);
-                                throw new VideoException("观看次数达到上限了！");
+                                // Bugsnag.notify(new Throwable(TAG + "Ten videos each day address: " + dataManager.getPorn9VideoAddress()), Severity.WARNING);
+                                throw new VideoException("观看次数达到上限了,请更换地址或者代理服务器！");
                             } else {
                                 throw new VideoException("解析视频链接失败了");
                             }
@@ -99,7 +101,7 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
                         ifViewAttached(new ViewAction<PlayVideoView>() {
                             @Override
                             public void run(@NonNull PlayVideoView view) {
-                                view.playVideo(saveVideoUrl(videoResult, unLimit91PornItem));
+                                view.parseVideoUrlSuccess(saveVideoUrl(videoResult, v9PornItem));
                             }
                         });
                     }
@@ -117,186 +119,33 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
     }
 
     @Override
-    public void loadVideoComment(String videoId, String viewKey, final boolean pullToRefresh) {
-        if (pullToRefresh) {
-            start = 1;
-        }
-        dataManager.loadPorn91VideoComments(videoId, start, viewKey)
-                .retryWhen(new RetryWhenProcess(RetryWhenProcess.PROCESS_TIME))
-                .compose(RxSchedulersHelper.<List<VideoComment>>ioMainThread())
-                .compose(provider.<List<VideoComment>>bindUntilEvent(Lifecycle.Event.ON_STOP))
-                .map(new Function<List<VideoComment>, List<VideoComment>>() {
-                    @Override
-                    public List<VideoComment> apply(List<VideoComment> videoComments) throws Exception {
-                        List<VideoComment> newList=new ArrayList<>();
-                        for (VideoComment c : videoComments) {
-                            List<String> list = c.getCommentQuoteList();
-                            StringBuilder builder = new StringBuilder();
-                            for (int i = 0; i < list.size(); i++) {
-                                builder.append(list.get(i));
-                            }
-                            if (invalidComment(builder.toString())) {
-                                Logger.d("invalidComment " + builder.toString());
-                            }else {
-                                newList.add(c);
-                            }
-                        }
-                        return newList;
-                    }
-                })
-                .subscribe(new CallBackWrapper<List<VideoComment>>() {
-                    @Override
-                    public void onBegin(Disposable d) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                if (start == 1 && pullToRefresh) {
-                                    view.showLoading(pullToRefresh);
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onSuccess(final List<VideoComment> videoCommentList) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                if (start == 1) {
-                                    view.setVideoCommentData(videoCommentList, pullToRefresh);
-                                } else {
-                                    view.setMoreVideoCommentData(videoCommentList);
-                                }
-                                if (videoCommentList.size() == 0 && start == 1) {
-                                    view.noMoreVideoCommentData("暂无评论");
-                                } else if (videoCommentList.size() == 0 && start > 1) {
-                                    view.noMoreVideoCommentData("没有更多评论了");
-                                }
-                                start++;
-                                view.showContent();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(final String msg, int code) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                if (start == 1) {
-                                    view.loadVideoCommentError(msg);
-                                } else {
-                                    view.loadMoreVideoCommentError(msg);
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onCancel(boolean isCancel) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                Logger.t(TAG).d("------getVideoComments  onCancel----------------------------");
-                                if (start == 1) {
-                                    view.loadVideoCommentError("取消请求");
-                                } else {
-                                    view.loadMoreVideoCommentError("取消请求");
-                                }
-                            }
-                        });
-                    }
-                });
-    }
-
-    private boolean invalidComment(String s) {
-        return s.contains("谢谢") | s.contains("加速") | s.length() <= 2;
+    public boolean isUserLogin() {
+        return dataManager.isUserLogin();
     }
 
     @Override
-    public void commentVideo(String comment, String uid, String vid, String viewKey) {
-        String cpaintFunction = "process_comments";
-        String responseType = "json";
-        String comments = "\"" + comment + "\"";
-        Logger.t(TAG).d(comments);
-        dataManager.commentPorn91Video(cpaintFunction, comments, uid, vid, viewKey, responseType)
-                .retryWhen(new RetryWhenProcess(RetryWhenProcess.PROCESS_TIME))
-                .compose(RxSchedulersHelper.<String>ioMainThread())
-                .compose(provider.<String>bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(new CallBackWrapper<String>() {
-                    @Override
-                    public void onBegin(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(final String result) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                view.commentVideoSuccess(result);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(final String msg, int code) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                view.showError(msg);
-                            }
-                        });
-                    }
-                });
+    public int getLoginUserId() {
+        return dataManager.getUser().getUserId();
     }
+
+    public void updateUnLimit91PornItem(UnLimit91PornItem v9PornItem) {
+        dataManager.updateUnLimit91PornItem(v9PornItem);
+    }
+
 
     @Override
-    public void replyComment(String comment, String username, String vid, String commentId, String viewKey) {
-        dataManager.replyPorn91VideoComment(comment, username, vid, commentId, viewKey)
-                .retryWhen(new RetryWhenProcess(RetryWhenProcess.PROCESS_TIME))
-                .compose(RxSchedulersHelper.<String>ioMainThread())
-                .compose(provider.<String>bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(new CallBackWrapper<String>() {
-                    @Override
-                    public void onBegin(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(final String s) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                if ("OK".equals(s)) {
-                                    view.replyVideoCommentSuccess("留言已经提交，审核后通过");
-                                } else {
-                                    view.replyVideoCommentError("回复评论失败");
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(final String msg, int code) {
-                        ifViewAttached(new ViewAction<PlayVideoView>() {
-                            @Override
-                            public void run(@NonNull PlayVideoView view) {
-                                view.showError(msg);
-                            }
-                        });
-                    }
-                })
-        ;
+    public void setFavoriteNeedRefresh(boolean favoriteNeedRefresh) {
+        dataManager.setFavoriteNeedRefresh(favoriteNeedRefresh);
     }
 
-    private UnLimit91PornItem saveVideoUrl(VideoResult videoResult, UnLimit91PornItem unLimit91PornItem) {
+    private UnLimit91PornItem saveVideoUrl(VideoResult videoResult, UnLimit91PornItem v9PornItem) {
         dataManager.saveVideoResult(videoResult);
-        unLimit91PornItem.setVideoResult(videoResult);
-        unLimit91PornItem.setViewHistoryDate(new Date());
-        dataManager.saveUnLimit91PornItem(unLimit91PornItem);
-        return unLimit91PornItem;
+        v9PornItem.setVideoResult(videoResult);
+        v9PornItem.setViewHistoryDate(new Date());
+        dataManager.saveUnLimit91PornItem(v9PornItem);
+        return v9PornItem;
     }
+
 
     @Override
     public void downloadVideo(UnLimit91PornItem unLimit91PornItem, boolean isDownloadNeedWifi, boolean isForceReDownload) {
@@ -346,5 +195,17 @@ public class PlayVideoPresenter extends MvpBasePresenter<PlayVideoView> implemen
                 });
             }
         });
+    }
+
+
+
+    /**
+     * 是否需要为了解析uid，只有登录状态下且uid还未解析过才需要解析
+     *
+     * @return true
+     */
+    public boolean isLoadForUid() {
+        User user = dataManager.getUser();
+        return dataManager.isUserLogin() && user.getUserId() == 0;
     }
 }

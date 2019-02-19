@@ -71,7 +71,7 @@ public class VideoResult implements Serializable {
         this.videoId = videoId;
     }
 
-    public String getOwnnerId() {
+    public String getOwnerId() {
         return ownnerId;
     }
 
@@ -158,5 +158,9 @@ public class VideoResult implements Serializable {
 
     public void setVideoName(String videoName) {
         this.videoName = videoName;
+    }
+
+    public String getOwnnerId() {
+        return this.ownnerId;
     }
 }

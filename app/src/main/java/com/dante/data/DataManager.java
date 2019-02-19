@@ -1,6 +1,7 @@
 package com.dante.data;
 
 import com.dante.data.db.DbHelper;
+import com.dante.data.model.User;
 import com.dante.data.network.ApiHelper;
 import com.dante.data.prefs.PreferencesHelper;
 
@@ -10,5 +11,7 @@ import com.dante.data.prefs.PreferencesHelper;
  */
 
 public interface DataManager extends DbHelper, ApiHelper, PreferencesHelper {
+    boolean isUserLogin();
+    User getUser();
 
 }

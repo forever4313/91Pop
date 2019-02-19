@@ -8,4 +8,5 @@ package com.dante.ui.favorite;
 
 public interface IBaseFavorite {
     void favorite(String uId, String videoId, String ownnerId);
+
 }

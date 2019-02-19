@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.dante.data.model.User;
 import com.dante.data.network.Api;
 import com.dante.di.ApplicationContext;
 import com.dante.di.PreferenceInfo;
@@ -324,4 +325,5 @@ public class AppPreferencesHelper implements PreferencesHelper {
     public void setCustomDownloadVideoDirPath(String customDirPath) {
         mPrefs.edit().putString(KEY_SP_CUSTOM_DOWNLOAD_VIDEO_DIR_PATH, customDirPath).commit();
     }
+
 }

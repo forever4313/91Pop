@@ -11,9 +11,10 @@ import com.dante.data.model.UnLimit91PornItem;
 public interface IPlay extends IBasePlay {
     void loadVideoUrl(UnLimit91PornItem unLimit91PornItem);
 
-    void loadVideoComment(String videoId, String viewKey, boolean pullToRefresh);
+    boolean isUserLogin();
+    int getLoginUserId();
+    void setFavoriteNeedRefresh(boolean favoriteNeedRefresh);
 
-    void commentVideo(String comment, String uid, String vid, String viewKey);
 
-    void replyComment(String comment, String username, String vid, String commentId, String viewKey);
+
 }

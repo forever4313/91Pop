@@ -7,4 +7,5 @@ package com.dante.ui.porn91video.author;
 
 public interface IAuthor {
     void authorVideos(String uid, boolean pullToRefresh);
+    boolean isUserLogin();
 }

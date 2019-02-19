@@ -1,5 +1,7 @@
 package com.dante.data.prefs;
 
+import com.dante.data.model.User;
+
 /**
  * @author flymegoc
  * @date 2018/2/12
