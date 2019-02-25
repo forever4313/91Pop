@@ -1,9 +1,13 @@
 package com.dante.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.text.format.Formatter;
@@ -30,7 +34,8 @@ public class DownloadVideoService extends Service implements DownloadManager.Dow
 
     @Inject
     protected DataManager dataManager;
-    private int id = Constants.VIDEO_DOWNLOAD_NOTIFICATION_ID;
+    private int notificationChannelId = Constants.VIDEO_DOWNLOAD_NOTIFICATION_ID;
+    private String notificationChannelName = "channelName";
 
     public DownloadVideoService() {
 
@@ -45,6 +50,13 @@ public class DownloadVideoService extends Service implements DownloadManager.Dow
     @Override
     public void onCreate() {
         super.onCreate();
+        //创建NotificationChannel
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            NotificationChannel channel = new NotificationChannel(notificationChannelId+"", notificationChannelName, NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(channel);
+        }
         DaggerServiceComponent.builder().applicationComponent(((MyApplication) getApplication()).getApplicationComponent()).build().inject(this);
         DownloadManager.getImpl().addUpdater(this);
     }
@@ -56,7 +68,7 @@ public class DownloadVideoService extends Service implements DownloadManager.Dow
     }
 
     private void startNotification(String videoName, int progress, String fileSize, int speed) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, String.valueOf(id));
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, String.valueOf(notificationChannelId));
         builder.setContentTitle("正在下载");
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setProgress(100, progress, false);
@@ -66,7 +78,8 @@ public class DownloadVideoService extends Service implements DownloadManager.Dow
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
         Notification notification = builder.build();
-        startForeground(id, notification);
+
+        startForeground(notificationChannelId, notification);
     }
 
     @Override

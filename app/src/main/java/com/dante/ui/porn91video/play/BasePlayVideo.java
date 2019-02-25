@@ -101,6 +101,8 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setTransparentForImageViewInFragment(this,null);
+
         setContentView(R.layout.activity_base_play_video);
         ButterKnife.bind(this);
         initPlayerView();

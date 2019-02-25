@@ -29,6 +29,7 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override

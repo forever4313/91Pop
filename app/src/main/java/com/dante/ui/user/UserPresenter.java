@@ -57,6 +57,7 @@ public class UserPresenter extends MvpBasePresenter<UserView> implements IUser {
 
                     @Override
                     public void onSuccess(final User user) {
+                        user.copyProperties(dataManager.getUser());
                         if (loginListener != null) {
                             loginListener.loginSuccess(user);
                         } else {

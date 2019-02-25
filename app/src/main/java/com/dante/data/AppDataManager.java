@@ -541,6 +541,7 @@ public class AppDataManager implements DataManager {
 
     @Override
     public boolean isUserLogin() {
-        return UserHelper.isUserInfoComplete(user);    }
+        return UserHelper.isUserInfoComplete(user);
+    }
 
 }
