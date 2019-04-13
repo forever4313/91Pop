@@ -35,10 +35,16 @@ public class VideoResult implements Serializable {
     private String ownnerName;
     private String addDate;
     private String userOtherInfo;
+    private String  authorId;
 
-    @Generated(hash = 567305003)
-    public VideoResult(Long id, String videoUrl, String videoId, String ownnerId, String thumbImgUrl,
-                       String videoName, String ownnerName, String addDate, String userOtherInfo) {
+
+
+
+
+    @Generated(hash = 2010720266)
+    public VideoResult(Long id, String videoUrl, String videoId, String ownnerId,
+            String thumbImgUrl, String videoName, String ownnerName, String addDate,
+            String userOtherInfo, String authorId) {
         this.id = id;
         this.videoUrl = videoUrl;
         this.videoId = videoId;
@@ -48,11 +54,15 @@ public class VideoResult implements Serializable {
         this.ownnerName = ownnerName;
         this.addDate = addDate;
         this.userOtherInfo = userOtherInfo;
+        this.authorId = authorId;
     }
 
     @Generated(hash = 121136283)
     public VideoResult() {
     }
+
+
+
 
 
     public String getVideoUrl() {
@@ -123,6 +133,14 @@ public class VideoResult implements Serializable {
         VideoResult that = (VideoResult) o;
 
         return videoId != null ? videoId.equals(that.videoId) : that.videoId == null;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     @Override

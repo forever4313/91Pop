@@ -201,7 +201,7 @@ public class Parse91PronVideo {
      * @param html 视频页
      * @return 视频连接
      */
-    public static VideoResult parseVideoPlayUrl(String html) {
+    public static VideoResult parseVideoPlayUrl(String html,User user) {
         VideoResult videoResult = new VideoResult();
         if (html.contains("你每天只可观看10个视频")) {
             Logger.d("已经超出观看上限了");
@@ -239,11 +239,26 @@ public class Parse91PronVideo {
         videoResult.setVideoId(videoId);
         Logger.t(TAG).d("视频Id：" + videoId);
 
+        //这里解析的作者id已经变了，非纯数字了
         Document doc = Jsoup.parse(html);
-        String ownnerUrl = doc.select("a[href*=UID]").first().attr("href");
-        String ownnerId = ownnerUrl.substring(ownnerUrl.indexOf("=") + 1, ownnerUrl.length());
-        videoResult.setOwnnerId(ownnerId);
-        Logger.t(TAG).d("作者Id：" + ownnerId);
+        String ownerUrl = doc.select("a[href*=UID]").first().attr("href");
+        String ownerId = ownerUrl.substring(ownerUrl.indexOf("=") + 1, ownerUrl.length());
+        videoResult.setOwnnerId(ownerId);
+        Logger.t(TAG).d("作者Id：" + ownerId);
+
+        String addToFavLink = doc.getElementById("addToFavLink").selectFirst("a").attr("onClick");
+        String args[] = addToFavLink.split(",");
+        String userId = args[1].trim();
+        Logger.t(TAG).d("userId:::" + userId);
+        user.setUserId(Integer.parseInt(userId));
+
+        //原始纯数字作者id，用于收藏接口
+        String authorId = args[3].replace(");", "").trim();
+        Logger.t(TAG).d("authorId:::" + authorId);
+        videoResult.setAuthorId(authorId);
+
+
+
 
         String ownnerName = doc.select("a[href*=UID]").first().text();
         videoResult.setOwnnerName(ownnerName);
@@ -319,7 +334,7 @@ public class Parse91PronVideo {
      */
     public static BaseResult<List<UnLimit91PornItem>> parseMyFavorite(String html) {
         int totalPage = 1;
-        List<UnLimit91PornItem> unLimit91PornItemList = new ArrayList<>();
+        List<UnLimit91PornItem> v9PornItemList = new ArrayList<>();
         Document doc = Jsoup.parse(html);
         Element body = doc.getElementById("leftside");
 
@@ -327,31 +342,31 @@ public class Parse91PronVideo {
 
         for (Element element : videos) {
 
-            UnLimit91PornItem unLimit91PornItem = new UnLimit91PornItem();
+            UnLimit91PornItem v9PornItem = new UnLimit91PornItem();
 
             String contentUrl = element.select("a").first().attr("href");
 
             String viewKey = contentUrl.substring(contentUrl.indexOf("=") + 1, contentUrl.length());
-            unLimit91PornItem.setViewKey(viewKey);
+            v9PornItem.setViewKey(viewKey);
             Logger.t(TAG).d(viewKey);
 
             String title = element.select("strong").first().text();
-            unLimit91PornItem.setTitle(title);
+            v9PornItem.setTitle(title);
             Logger.t(TAG).d(title);
 
             String imgUrl = element.select("img").first().attr("src");
-            unLimit91PornItem.setImgUrl(imgUrl);
+            v9PornItem.setImgUrl(imgUrl);
             Logger.t(TAG).d(imgUrl);
 
             String allInfo = element.text();
             Logger.t(TAG).d(allInfo);
 
             String duration = allInfo.substring(allInfo.indexOf("时长") + 3, allInfo.indexOf("Views") - 3);
-            unLimit91PornItem.setDuration(duration);
+            v9PornItem.setDuration(duration);
             Logger.t(TAG).d(duration);
 
             String info = allInfo.substring(allInfo.indexOf("添加时间"), allInfo.length());
-            unLimit91PornItem.setInfo(info);
+            v9PornItem.setInfo(info);
             Logger.t(TAG).d(info);
 
             String rvid = element.select("input").first().attr("value");
@@ -359,9 +374,9 @@ public class Parse91PronVideo {
             VideoResult videoResult = new VideoResult();
             videoResult.setId(VideoResult.OUT_OF_WATCH_TIMES);
             videoResult.setVideoId(rvid);
-            unLimit91PornItem.setVideoResult(videoResult);
+            v9PornItem.setVideoResult(videoResult);
 
-            unLimit91PornItemList.add(unLimit91PornItem);
+            v9PornItemList.add(v9PornItem);
         }
 
         //总页数
@@ -392,7 +407,7 @@ public class Parse91PronVideo {
         }
 
         baseResult.setTotalPage(totalPage);
-        baseResult.setData(unLimit91PornItemList);
+        baseResult.setData(v9PornItemList);
 
         return baseResult;
     }

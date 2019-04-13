@@ -33,6 +33,7 @@ public class VideoResultDao extends AbstractDao<VideoResult, Long> {
         public final static Property OwnnerName = new Property(6, String.class, "ownnerName", false, "OWNNER_NAME");
         public final static Property AddDate = new Property(7, String.class, "addDate", false, "ADD_DATE");
         public final static Property UserOtherInfo = new Property(8, String.class, "userOtherInfo", false, "USER_OTHER_INFO");
+        public final static Property AuthorId = new Property(9, String.class, "authorId", false, "AUTHOR_ID");
     }
 
 
@@ -56,7 +57,8 @@ public class VideoResultDao extends AbstractDao<VideoResult, Long> {
                 "\"VIDEO_NAME\" TEXT," + // 5: videoName
                 "\"OWNNER_NAME\" TEXT," + // 6: ownnerName
                 "\"ADD_DATE\" TEXT," + // 7: addDate
-                "\"USER_OTHER_INFO\" TEXT);"); // 8: userOtherInfo
+                "\"USER_OTHER_INFO\" TEXT," + // 8: userOtherInfo
+                "\"AUTHOR_ID\" TEXT);"); // 9: authorId
         // Add Indexes
         db.execSQL("CREATE INDEX " + constraint + "IDX_VIDEO_RESULT_VIDEO_ID ON \"VIDEO_RESULT\"" +
                 " (\"VIDEO_ID\" ASC);");
@@ -116,6 +118,11 @@ public class VideoResultDao extends AbstractDao<VideoResult, Long> {
         if (userOtherInfo != null) {
             stmt.bindString(9, userOtherInfo);
         }
+ 
+        String authorId = entity.getAuthorId();
+        if (authorId != null) {
+            stmt.bindString(10, authorId);
+        }
     }
 
     @Override
@@ -166,6 +173,11 @@ public class VideoResultDao extends AbstractDao<VideoResult, Long> {
         if (userOtherInfo != null) {
             stmt.bindString(9, userOtherInfo);
         }
+ 
+        String authorId = entity.getAuthorId();
+        if (authorId != null) {
+            stmt.bindString(10, authorId);
+        }
     }
 
     @Override
@@ -184,7 +196,8 @@ public class VideoResultDao extends AbstractDao<VideoResult, Long> {
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // videoName
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // ownnerName
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // addDate
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // userOtherInfo
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // userOtherInfo
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // authorId
         );
         return entity;
     }
@@ -200,6 +213,7 @@ public class VideoResultDao extends AbstractDao<VideoResult, Long> {
         entity.setOwnnerName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setAddDate(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setUserOtherInfo(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setAuthorId(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override

@@ -359,12 +359,12 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
             showMessage("请先登录", TastyToast.SUCCESS);
             return;
         }
-        if (Integer.parseInt(videoResult.getOwnerId()) == presenter.getLoginUserId()) {
+        if (Integer.parseInt(videoResult.getAuthorId()) == presenter.getLoginUserId()) {
             showMessage("不能收藏自己的视频", TastyToast.WARNING);
             return;
         }
         favoriteDialog.show();
-        presenter.favorite(String.valueOf(presenter.getLoginUserId()), videoResult.getVideoId(), videoResult.getOwnerId());
+        presenter.favorite(String.valueOf(presenter.getLoginUserId()), videoResult.getVideoId(), videoResult.getAuthorId());
     }
 
     private void shareVideoUrl() {

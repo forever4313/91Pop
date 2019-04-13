@@ -44,7 +44,6 @@ import io.reactivex.schedulers.Schedulers;
 public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements IFavorite {
     private static final String TAG = FavoriteListener.class.getSimpleName();
 
-    private User user;
     private Integer totalPage = 1;
     private int page = 1;
     private LifecycleProvider<Lifecycle.Event> provider;
@@ -56,9 +55,8 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
     private DataManager dataManager;
 
     @Inject
-    public FavoritePresenter(DataManager dataManager, User user, LifecycleProvider<Lifecycle.Event> provider) {
+    public FavoritePresenter(DataManager dataManager, LifecycleProvider<Lifecycle.Event> provider) {
         this.dataManager = dataManager;
-        this.user = user;
         this.provider = provider;
     }
 
@@ -134,6 +132,7 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
         }
         //RxCache条件区别
         String condition = null;
+        final User user = dataManager.getUser();
         if (user != null) {
             condition = user.getUserName();
         }
@@ -142,7 +141,7 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
                 @Override
                 public void run(@NonNull FavoriteView view) {
                     if (user != null) {
-                        Bugsnag.notify(new Throwable(TAG + " user info: " + user.toString()), Severity.WARNING);
+                        // Bugsnag.notify(new Throwable(TAG + " user info: " + user.toString()), Severity.WARNING);
                     }
                     view.showError("用户信息不完整，请重新登录后重试！");
                 }
@@ -177,16 +176,16 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
                     }
 
                     @Override
-                    public void onSuccess(final List<UnLimit91PornItem> unLimit91PornItems) {
+                    public void onSuccess(final List<UnLimit91PornItem> v9PornItems) {
                         ifViewAttached(new ViewAction<FavoriteView>() {
                             @Override
                             public void run(@NonNull FavoriteView view) {
                                 if (page == 1) {
-                                    view.setFavoriteData(unLimit91PornItems);
+                                    view.setFavoriteData(v9PornItems);
                                     view.showContent();
                                 } else {
                                     view.loadMoreDataComplete();
-                                    view.setMoreData(unLimit91PornItems);
+                                    view.setMoreData(v9PornItems);
                                 }
                                 //已经最后一页了
                                 if (page >= totalPage) {
@@ -233,12 +232,12 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
                     }
 
                     @Override
-                    public void onSuccess(final List<UnLimit91PornItem> unLimit91PornItemList) {
+                    public void onSuccess(final List<UnLimit91PornItem> v9PornItemList) {
                         ifViewAttached(new ViewAction<FavoriteView>() {
                             @Override
                             public void run(@NonNull FavoriteView view) {
                                 //顺序很重要，涉及缓存
-                                view.setFavoriteData(unLimit91PornItemList);
+                                view.setFavoriteData(v9PornItemList);
                                 view.deleteFavoriteSucc("删除成功");
 
                             }
@@ -264,13 +263,13 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
         Observable.create(new ObservableOnSubscribe<List<UnLimit91PornItem>>() {
             @Override
             public void subscribe(ObservableEmitter<List<UnLimit91PornItem>> e) throws Exception {
-                List<UnLimit91PornItem> unLimit91PornItems = dataManager.loadAllLimit91PornItems();
-                e.onNext(unLimit91PornItems);
+                List<UnLimit91PornItem> v9PornItems = dataManager.loadAllLimit91PornItems();
+                e.onNext(v9PornItems);
                 e.onComplete();
             }
         }).map(new Function<List<UnLimit91PornItem>, String>() {
             @Override
-            public String apply(List<UnLimit91PornItem> unLimit91PornItems) throws Exception {
+            public String apply(List<UnLimit91PornItem> v9PornItems) throws Exception {
                 File file = new File(SDCardUtils.EXPORT_FILE);
                 if (file.exists()) {
                     if (!file.delete()) {
@@ -282,17 +281,17 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
                     throw new Exception("导出失败,创建新文件失败了");
                 }
                 if (onlyUrl) {
-                    for (UnLimit91PornItem unLimit91PornItem : unLimit91PornItems) {
-                        CharSequence data = unLimit91PornItem.getVideoResult().getVideoUrl() + "\r\n\r\n";
+                    for (UnLimit91PornItem v9PornItem : v9PornItems) {
+                        CharSequence data = v9PornItem.getVideoResult().getVideoUrl() + "\r\n\r\n";
                         if (TextUtils.isEmpty(data)) {
                             continue;
                         }
                         FileUtils.writeChars(file, "UTF-8", data);
                     }
                 } else {
-                    for (UnLimit91PornItem unLimit91PornItem : unLimit91PornItems) {
-                        String title = unLimit91PornItem.getTitle();
-                        String videoUrl = unLimit91PornItem.getVideoResult().getVideoUrl();
+                    for (UnLimit91PornItem v9PornItem : v9PornItems) {
+                        String title = v9PornItem.getTitle();
+                        String videoUrl = v9PornItem.getVideoResult().getVideoUrl();
                         CharSequence data = title + "\r\n" + videoUrl + "\r\n\r\n";
                         if (TextUtils.isEmpty(data)) {
                             continue;
@@ -332,6 +331,21 @@ public class FavoritePresenter extends MvpBasePresenter<FavoriteView> implements
                         });
                     }
                 });
+    }
+
+    @Override
+    public int getPlayBackEngine() {
+        return dataManager.getPlaybackEngine();
+    }
+
+    @Override
+    public boolean isFavoriteNeedRefresh() {
+        return dataManager.isFavoriteNeedRefresh();
+    }
+
+    @Override
+    public void setFavoriteNeedRefresh(boolean needRefresh) {
+        dataManager.setFavoriteNeedRefresh(needRefresh);
     }
 
     public interface FavoriteListener {

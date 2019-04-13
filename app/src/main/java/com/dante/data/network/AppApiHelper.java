@@ -87,9 +87,9 @@ public class AppApiHelper implements ApiHelper {
     private ProxyServiceApi proxyServiceApi;
     private AddressHelper addressHelper;
     private Gson gson;
-
+    private User user;
     @Inject
-    public AppApiHelper(CacheProviders cacheProviders, NoLimit91PornServiceApi noLimit91PornServiceApi, Forum91PronServiceApi forum91PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PigAvServiceApi pigAvServiceApi, ProxyServiceApi proxyServiceApi, AddressHelper addressHelper, Gson gson) {
+    public AppApiHelper(CacheProviders cacheProviders, NoLimit91PornServiceApi noLimit91PornServiceApi, Forum91PronServiceApi forum91PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PigAvServiceApi pigAvServiceApi, ProxyServiceApi proxyServiceApi, AddressHelper addressHelper, Gson gson,User user) {
         this.cacheProviders = cacheProviders;
         this.noLimit91PornServiceApi = noLimit91PornServiceApi;
         this.forum91PronServiceApi = forum91PronServiceApi;
@@ -100,6 +100,7 @@ public class AppApiHelper implements ApiHelper {
         this.proxyServiceApi = proxyServiceApi;
         this.addressHelper = addressHelper;
         this.gson = gson;
+        this.user = user;
     }
 
     @Override
@@ -235,7 +236,7 @@ public class AppApiHelper implements ApiHelper {
                 .map(new Function<String, VideoResult>() {
                     @Override
                     public VideoResult apply(String s) throws Exception {
-                        return Parse91PronVideo.parseVideoPlayUrl(s);
+                        return Parse91PronVideo.parseVideoPlayUrl(s,user);
                     }
                 });
     }
