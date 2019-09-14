@@ -238,7 +238,7 @@ public class ParseForum91Porn {
                 element.attr("src", imgUrl);
                 stringList.add(imgUrl);
             } else if (!TextUtils.isEmpty(element.attr("file"))) {
-                imgUrl = baseUrl + element.attr("file");
+                imgUrl =  element.attr("file");
                 element.attr("src", imgUrl);
                 stringList.add(imgUrl);
             }
