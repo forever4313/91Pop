@@ -239,7 +239,7 @@ public class ParseForum91Porn {
                 stringList.add(imgUrl);
             } else if (!TextUtils.isEmpty(element.attr("file"))) {
                 imgUrl =  element.attr("file");
-                if((imgUrl.endsWith(".jpg")|| imgUrl.endsWith(".png")) && !imgUrl.startsWith("http")){
+                if((imgUrl.toLowerCase().endsWith(".jpg") ||(imgUrl.toLowerCase().endsWith(".jpeg")|| imgUrl.toLowerCase().endsWith(".png") || imgUrl.toLowerCase().endsWith(".gif")) && !imgUrl.toLowerCase().startsWith("http"))){
                     imgUrl = baseUrl + imgUrl;
                 }
                 element.attr("src", imgUrl);
