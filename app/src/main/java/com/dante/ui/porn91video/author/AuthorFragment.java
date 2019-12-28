@@ -62,7 +62,7 @@ public class AuthorFragment extends MvpFragment<AuthorView, AuthorPresenter> imp
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mV91PornAdapter = new UnLimit91Adapter(R.layout.item_unlimit_91porn, null);
+        mV91PornAdapter = new UnLimit91Adapter(R.layout.item_unlimit_91porn,null);
         mV91PornAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -79,8 +79,9 @@ public class AuthorFragment extends MvpFragment<AuthorView, AuthorPresenter> imp
             public void onLoadMoreRequested() {
                 if (canLoadAuthorVideos()) {
                     presenter.authorVideos(v9PornItem.getVideoResult().getOwnerId(), false);
+                } else {
+                    showError("数据错误，无法加载");
                 }
-
             }
         }, recyclerView);
 
@@ -111,6 +112,8 @@ public class AuthorFragment extends MvpFragment<AuthorView, AuthorPresenter> imp
             public void onRefresh() {
                 if (canLoadAuthorVideos()) {
                     presenter.authorVideos(v9PornItem.getVideoResult().getOwnerId(), true);
+                } else {
+                    showError("数据错误，无法加载");
                 }
             }
         });
@@ -122,7 +125,11 @@ public class AuthorFragment extends MvpFragment<AuthorView, AuthorPresenter> imp
     @Override
     protected void onLazyLoadOnce() {
         super.onLazyLoadOnce();
-        loadAuthorVideos();
+        if (canLoadAuthorVideos()) {
+            loadAuthorVideos();
+        } else {
+            showError("数据错误，无法加载");
+        }
     }
 
     public void loadAuthorVideos() {
@@ -131,7 +138,7 @@ public class AuthorFragment extends MvpFragment<AuthorView, AuthorPresenter> imp
     }
 
     private boolean canLoadAuthorVideos() {
-        return presenter.isUserLogin() && v9PornItem != null && v9PornItem.getVideoResultId() != 0;
+        return v9PornItem != null && v9PornItem.getVideoResult() != null && v9PornItem.getVideoResultId() != 0;
     }
 
     @Override

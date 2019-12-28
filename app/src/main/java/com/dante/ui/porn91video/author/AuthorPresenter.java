@@ -83,6 +83,8 @@ public class AuthorPresenter extends MvpBasePresenter<AuthorView> implements IAu
                                 if (page == 1) {
                                     view.setData(unLimit91PornItems);
                                     view.showContent();
+                                    view.loadMoreDataComplete();
+
                                 } else {
                                     view.loadMoreDataComplete();
                                     view.setMoreData(unLimit91PornItems);
