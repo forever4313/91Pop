@@ -278,10 +278,13 @@ public class Parse91PronVideo {
         String otherInfo = allInfo.substring(allInfo.indexOf("注册"), allInfo.indexOf("简介"));
         videoResult.setUserOtherInfo(otherInfo);
         Logger.t(TAG).d(otherInfo);
-
-        String thumImg = doc.getElementById("vid").attr("poster");
-        videoResult.setThumbImgUrl(thumImg);
-        Logger.t(TAG).d("缩略图：" + thumImg);
+        try {
+            String thumImg = doc.getElementById("player_one").attr("poster");
+            videoResult.setThumbImgUrl(thumImg);
+            Logger.t(TAG).d("缩略图：" + thumImg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         String videoName = doc.getElementById("viewvideo-title").text();
         videoResult.setVideoName(videoName);
