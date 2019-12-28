@@ -114,6 +114,11 @@
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:label="@string/pig_av"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.dante.ui.google.GoogleRecaptchaVerifyActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
+            android:label="谷歌recapcha验证"
+            android:screenOrientation="portrait"></activity>
 
         <service android:name="com.dante.service.UpdateDownloadService"/>
         <service android:name="com.dante.service.DownloadVideoService"/>

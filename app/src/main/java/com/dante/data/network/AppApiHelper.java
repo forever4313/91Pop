@@ -66,6 +66,7 @@ import io.rx_cache2.EvictDynamicKeyGroup;
 import io.rx_cache2.EvictProvider;
 import io.rx_cache2.Reply;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * @author flymegoc
@@ -775,4 +776,14 @@ public class AppApiHelper implements ApiHelper {
                     }
                 });
     }
+    @Override
+    public Observable<Response<ResponseBody>> testV9Porn(String url) {
+        return noLimit91PornServiceApi.testV9Porn(url);
+    }
+
+    @Override
+    public Observable<Response<ResponseBody>> verifyGoogleRecaptcha(String action, String r, String id, String recaptcha) {
+        return noLimit91PornServiceApi.verifyGoogleRecaptcha(action, r, id, recaptcha);
+    }
+
 }

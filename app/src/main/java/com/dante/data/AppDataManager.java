@@ -29,6 +29,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * @author flymegoc
@@ -527,6 +529,12 @@ public class AppDataManager implements DataManager {
         return mPreferencesHelper.getCustomDownloadVideoDirPath();
     }
 
+
+    @Override
+    public boolean isShowUrlRedirectTipDialog() {
+        return mPreferencesHelper.isShowUrlRedirectTipDialog();
+    }
+
     @Override
     public void setCustomDownloadVideoDirPath(String customDirPath) {
         mPreferencesHelper.setCustomDownloadVideoDirPath(customDirPath);
@@ -543,5 +551,17 @@ public class AppDataManager implements DataManager {
     public boolean isUserLogin() {
         return UserHelper.isUserInfoComplete(user);
     }
+
+
+    @Override
+    public Observable<Response<ResponseBody>> testV9Porn(String url) {
+        return mApiHelper.testV9Porn(url);
+    }
+
+    @Override
+    public Observable<Response<ResponseBody>> verifyGoogleRecaptcha(String action, String r, String id, String recaptcha) {
+        return mApiHelper.verifyGoogleRecaptcha(action, r, id, recaptcha);
+    }
+
 
 }
