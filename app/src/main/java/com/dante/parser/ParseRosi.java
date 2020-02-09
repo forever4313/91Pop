@@ -40,7 +40,7 @@ public class ParseRosi {
 
             int startIndex = contentUrl.lastIndexOf("/rosi-");
             int endIndex = contentUrl.lastIndexOf(".");
-            String idStr = StringUtils.subString(contentUrl, startIndex + 1, endIndex);
+            String idStr = StringUtils.subString(contentUrl, startIndex + 6, endIndex);
 
             if (!TextUtils.isEmpty(idStr) && TextUtils.isDigitsOnly(idStr)) {
                 mmRosi.setId(Integer.parseInt(idStr));
@@ -71,5 +71,23 @@ public class ParseRosi {
 
         baseResult.setData(mmRosiList);
         return baseResult;
+    }
+
+    public static List<String> parseRosiMmAlbumList(String html) {
+        List<String> list = new ArrayList<>();
+        Logger.t(TAG).d(html);
+        Document doc = Jsoup.parse(html);
+        Element ul = doc.getElementById("single-content");
+        Element picsContainer = ul.selectFirst("div.post-content");
+        Element first = picsContainer.selectFirst("a");
+        String firstHref = first.attr("href");
+        list.add(firstHref);
+        Elements lis = picsContainer.select("span");
+        for (Element li : lis) {
+            String imgUrl = li.selectFirst("a").attr("href");
+
+            list.add(imgUrl);
+        }
+        return list;
     }
 }

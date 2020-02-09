@@ -107,7 +107,7 @@ public class MmRosiFragment extends MvpFragment<MmRosiView, MmRosiPresenter> imp
                     return;
                 }
                 Intent intent = new Intent(context, PictureViewerActivity.class);
-                intent.putExtra(Keys.KEY_INTENT_99_MM_ITEM, mmRosi);
+                intent.putExtra(Keys.KEY_INTENT_MM_ROSI_ITEM, mmRosi);
                 startActivityWithAnimotion(intent);
             }
         });

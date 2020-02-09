@@ -8,5 +8,5 @@ package com.dante.ui.images.viewimage;
 public interface IPictureViewer {
     void listMeZiPicture(int id, boolean pullToRefresh);
 
-    void list99MmPicture(int id, String imageUrl, boolean pullToRefresh);
+    void listRosiMmPicture(int id, String imageUrl, boolean pullToRefresh);
 }

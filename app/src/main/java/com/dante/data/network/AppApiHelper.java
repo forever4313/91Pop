@@ -566,7 +566,8 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Observable<List<String>> mmRosiImageList(int id, final String imageUrl, boolean pullToRefresh) {
-        return cacheProviders.cacheWithNoLimitTime(mmRosiServiceApi.imageLists("view", id), new DynamicKey(id), new EvictDynamicKey(pullToRefresh))
+        String url = Api.APP_ROSI_MM_DOMAIN+"rosi/rosi-"+id+".html";
+        return cacheProviders.cacheWithLimitTime(mmRosiServiceApi.imageLists(url), new DynamicKey(id), new EvictDynamicKey(pullToRefresh))
                 .map(new Function<Reply<String>, String>() {
                     @Override
                     public String apply(Reply<String> stringReply) throws Exception {
@@ -576,12 +577,8 @@ public class AppApiHelper implements ApiHelper {
                 .map(new Function<String, List<String>>() {
                     @Override
                     public List<String> apply(String s) throws Exception {
-                        String[] tags = s.split(",");
-                        List<String> stringList = new ArrayList<>();
-                        for (int i = 0; i < tags.length; i++) {
-                            stringList.add(imageUrl.replace("small/", "").replace(".jpg", "/" + (i + 1) + "-" + tags[i]) + ".jpg");
-                        }
-                        return stringList;
+                        return ParseRosi.parseRosiMmAlbumList(s);
+
                     }
                 });
     }

@@ -32,8 +32,8 @@ public interface MmRosiServiceApi {
      * @param id  id
      * @return ob
      */
-    @Headers({"Referer: http://www.99mm.me/meitui/",
+    @Headers({"Referer: "+Api.APP_ROSI_MM_DOMAIN,
             "Domain-Name: " + Api.MM_ROSI_DOMAIN_NAME})
-    @GET("url.php")
-    Observable<String> imageLists(@Query("act") String act, @Query("id") int id);
+    @GET
+    Observable<String> imageLists(@Url String url);
 }

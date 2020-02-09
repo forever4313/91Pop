@@ -72,7 +72,7 @@ public class PictureViewerPresenter extends MvpBasePresenter<PictureViewerView> 
     }
 
     @Override
-    public void list99MmPicture(final int id, final String imageUrl, boolean pullToRefresh) {
+    public void listRosiMmPicture(final int id, final String imageUrl, boolean pullToRefresh) {
         dataManager.mmRosiImageList(id, imageUrl, pullToRefresh)
                 .compose(RxSchedulersHelper.<List<String>>ioMainThread())
                 .compose(provider.<List<String>>bindUntilEvent(Lifecycle.Event.ON_DESTROY))

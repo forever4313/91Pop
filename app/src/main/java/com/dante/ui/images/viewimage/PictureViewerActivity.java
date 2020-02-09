@@ -20,6 +20,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.dante.R;
 import com.dante.adapter.PictureAdapter;
 import com.dante.custom.TastyToast;
+import com.dante.data.model.MmRosi;
 import com.dante.ui.MvpActivity;
 import com.dante.utils.DialogUtils;
 import com.dante.utils.GlideApp;
@@ -87,8 +88,13 @@ public class PictureViewerActivity extends MvpActivity<PictureViewerView, Pictur
         viewPager.setAdapter(pictureAdapter);
         viewPager.setCurrentItem(currentPosition);
         int id = getIntent().getIntExtra(Keys.KEY_INTENT_MEI_ZI_TU_CONTENT_ID, 0);
-        presenter.listMeZiPicture(id, false);
-
+        if (id > 0) {
+            presenter.listMeZiPicture(id, false);
+        }
+        MmRosi mmRosi = (MmRosi) getIntent().getSerializableExtra(Keys.KEY_INTENT_MM_ROSI_ITEM);
+        if (mmRosi != null) {
+            presenter.listRosiMmPicture(mmRosi.getId(), mmRosi.getImgUrl(), false);
+        }
     }
 
     private void initListener() {

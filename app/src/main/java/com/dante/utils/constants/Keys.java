@@ -9,7 +9,7 @@ package com.dante.utils.constants;
 public class Keys {
 
     public final static String KEY_INTENT_LOGIN_FOR_ACTION = "key_intent_login_for_action";
-    public final static String KEY_INTENT_99_MM_ITEM = "key_intent_99_mm_item";
+    public final static String KEY_INTENT_MM_ROSI_ITEM = "key_intent_99_mm_item";
     public final static String KEY_INTENT_UNLIMIT91PORNITEM = "key_intent_unlimit91pornitem";
     public final static String KEY_INTENT_CATEGORY_ITEM = "key_intent_category_item";
 
