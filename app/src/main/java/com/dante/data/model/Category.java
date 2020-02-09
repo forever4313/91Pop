@@ -16,8 +16,8 @@ import java.io.Serializable;
 public class Category implements Serializable {
     public static final String[] CATEGORY_DEFAULT_91PORN_VALUE = {"index", "watch", "hot", "rp", "long", "md", "tf", "mf", "rf", "top", "top1", "hd"};
     public static final String[] CATEGORY_DEFAULT_91PORN_NAME = {"主页", "最近更新", "当前最热", "最近得分", "10分钟以上", "本月讨论", "本月收藏", "收藏最多", "最近加精", "本月最热", "上月最热", "高清(会员)"};
-    public static final String[] CATEGORY_DEFAULT_91PORN_FORUM_VALUE = {"index", "17", "19", "4", "21", "33", "34"};
-    public static final String[] CATEGORY_DEFAULT_91PORN_FORUM_NAME = {"主页", "91自拍达人原创区", "91自拍达人原创申请", "原创自拍区", "我爱我妻", "性趣分享", "两性健康"};
+    public static final String[] CATEGORY_DEFAULT_91PORN_FORUM_VALUE = {"index", "19", "digest"};
+    public static final String[] CATEGORY_DEFAULT_91PORN_FORUM_NAME = {"主页", "91自拍达人原创申请", "精华"};
     public static final String[] CATEGORY_DEFAULT_MEI_ZI_TU_VALUE = {"index", "hot", "best", "xinggan", "japan", "taiwan", "mm"};
     public static final String[] CATEGORY_DEFAULT_MEI_ZI_TU_NAME = {"主页", "最热", "推荐", "性感妹子", "日本妹子", "台湾妹子", "清纯妹子"};
     public static final String[] CATEGORY_DEFAULT_PIG_AV_VALUE = {"index", "熱門", "長片", "每日", "最新", "日韓", "精選"};

@@ -8,5 +8,5 @@ package com.dante.ui.porn91forum;
 public interface IForum {
     void loadForumIndexListData(boolean pullToRefresh);
 
-    void loadForumListData(boolean pullToRefresh, String fid);
+    void loadForumListData(boolean pullToRefresh, String fid,String filter);
 }

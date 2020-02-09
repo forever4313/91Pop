@@ -32,7 +32,7 @@ public interface Forum91PronServiceApi {
      */
     @Headers({"Domain-Name: " + Api.PORN91_FORUM_DOMAIN_NAME})
     @GET("forumdisplay.php")
-    Observable<String> forumdisplay(@Query("fid") String fid, @Query("page") int page);
+    Observable<String> forumdisplay(@Query("fid") String fid, @Query("page") int page,@Query("filter") String filter);
 
 
     /**

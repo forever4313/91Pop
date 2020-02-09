@@ -61,7 +61,7 @@ public interface ApiHelper {
 
     Observable<List<PinnedHeaderEntity<Forum91PronItem>>> loadPorn91ForumIndex();
 
-    Observable<BaseResult<List<Forum91PronItem>>> loadPorn91ForumListData(String fid, int page);
+    Observable<BaseResult<List<Forum91PronItem>>> loadPorn91ForumListData(String fid, int page,String filter);
 
     Observable<Porn91ForumContent> loadPorn91ForumContent(Long tid, final boolean isNightModel);
 

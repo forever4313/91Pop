@@ -46,9 +46,11 @@ public class AppDbHelper implements DbHelper {
     public void initCategory(int type, String[] value, String[] name) {
         int length = value.length;
         List<Category> categoryList = mDaoSession.getCategoryDao().queryBuilder().where(CategoryDao.Properties.CategoryType.eq(type)).build().list();
-        if (categoryList.size() == length) {
+        if (categoryList.size() == length ) {
             return;
         }
+
+
         for (int i = 0; i < length; i++) {
             Category category = new Category();
             category.setCategoryName(name[i]);

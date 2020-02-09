@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.danikula.videocache.HttpProxyCacheServer;
+import com.dante.parser.v9porn.VideoPlayUrlParser;
+import com.dante.parser.v9porn.VideoUrlParser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.dante.cookie.AppCookieManager;
@@ -58,6 +60,14 @@ public class ApplicationModule {
     Context providesContext() {
         return mApplication;
     }
+
+
+    @Provides
+    @Singleton
+    static VideoPlayUrlParser provideVideoPlayUrlParser(VideoUrlParser videoUrlParser){
+        return videoUrlParser;
+    }
+
 
     @Singleton
     @Provides

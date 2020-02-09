@@ -79,23 +79,17 @@ public class PictureViewerActivity extends MvpActivity<PictureViewerView, Pictur
 
     private void init() {
 //        fixSwipeBack();
-        imageList = getIntent().getStringArrayListExtra(Keys.KEY_INTENT_PICTURE_VIEWER_IMAGE_ARRAY_LIST);
+//        imageList = getIntent().getStringArrayListExtra(Keys.KEY_INTENT_PICTURE_VIEWER_IMAGE_ARRAY_LIST);
         int currentPosition = getIntent().getIntExtra(Keys.KEY_INTENT_PICTURE_VIEWER_CURRENT_IMAGE_POSITION, 0);
         updateNumberText(currentPosition);
-        if (imageList == null) {
-            imageList = new ArrayList<>();
-        }
+        imageList = new ArrayList<>();
+
         pictureAdapter = new PictureAdapter(imageList);
         viewPager.setAdapter(pictureAdapter);
         viewPager.setCurrentItem(currentPosition);
         int id = getIntent().getIntExtra(Keys.KEY_INTENT_MEI_ZI_TU_CONTENT_ID, 0);
-        if (id > 0) {
-            presenter.listMeZiPicture(id, false);
-        }
-        Mm99 mm99 = (Mm99) getIntent().getSerializableExtra(Keys.KEY_INTENT_99_MM_ITEM);
-        if (mm99 != null) {
-            presenter.list99MmPicture(mm99.getId(), mm99.getImgUrl(), false);
-        }
+        presenter.listMeZiPicture(id, false);
+
     }
 
     private void initListener() {
@@ -206,6 +200,7 @@ public class PictureViewerActivity extends MvpActivity<PictureViewerView, Pictur
         this.imageList.clear();
         this.imageList.addAll(imageList);
         pictureAdapter.notifyDataSetChanged();
+        updateNumberText(0);
 
     }
 

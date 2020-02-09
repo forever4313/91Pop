@@ -126,10 +126,16 @@ public class ForumFragment extends MvpFragment<ForumView, ForumPresenter> implem
     public void loadData(boolean pullToRefresh) {
         if ("index".equals(category.getCategoryValue())) {
             presenter.loadForumIndexListData(true);
-        } else if ("17".equals(category.getCategoryValue()) || "4".equals(category.getCategoryValue())) {
-            swipeLayout.setEnabled(false);
         } else {
-            presenter.loadForumListData(pullToRefresh, category.getCategoryValue());
+            String cateValue = category.getCategoryValue();
+            if(cateValue.equals("digest")){
+                cateValue = "19";
+            }
+            String filter = null;
+            if(category.getCategoryValue().equals("digest")){
+                filter = "digest";
+            }
+            presenter.loadForumListData(pullToRefresh, cateValue,filter);
         }
     }
 

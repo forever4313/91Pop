@@ -12,7 +12,7 @@ public interface Api {
 
     String GITHUB_DOMAIN_NAME = "github";
     String PORN91_VIDEO_DOMAIN_NAME = "http://91porn.com/";
-    String PORN91_FORUM_DOMAIN_NAME = "http://91dizhi-at-gmail-com-0201.p17.rocks/";
+    String PORN91_FORUM_DOMAIN_NAME = "https://f.wonderfulday28.live/";
     String PIGAV_DOMAIN_NAME = "pigav_domain_name";
     String MEI_ZI_TU_DOMAIN_NAME = "http://www.meizitu.net/";
     String MM_99_DOMAIN_NAME = "http://www.99mm.me/";

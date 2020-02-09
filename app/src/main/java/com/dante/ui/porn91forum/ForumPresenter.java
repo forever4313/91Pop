@@ -80,11 +80,11 @@ public class ForumPresenter extends MvpBasePresenter<ForumView> implements IForu
     }
 
     @Override
-    public void loadForumListData(final boolean pullToRefresh, String fid) {
+    public void loadForumListData(final boolean pullToRefresh, String fid,String filter) {
         if (pullToRefresh) {
             page = 1;
         }
-        dataManager.loadPorn91ForumListData(fid, page)
+        dataManager.loadPorn91ForumListData(fid, page,filter)
                 .map(new Function<BaseResult<List<Forum91PronItem>>, List<Forum91PronItem>>() {
                     @Override
                     public List<Forum91PronItem> apply(BaseResult<List<Forum91PronItem>> baseResult) throws Exception {

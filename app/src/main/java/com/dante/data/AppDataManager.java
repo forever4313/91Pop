@@ -210,8 +210,8 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<BaseResult<List<Forum91PronItem>>> loadPorn91ForumListData(String fid, int page) {
-        return mApiHelper.loadPorn91ForumListData(fid, page);
+    public Observable<BaseResult<List<Forum91PronItem>>> loadPorn91ForumListData(String fid, int page,String filter) {
+        return mApiHelper.loadPorn91ForumListData(fid, page,filter);
     }
 
     @Override

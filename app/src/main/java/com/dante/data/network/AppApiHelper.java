@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.dante.parser.v9porn.VideoPlayUrlParser;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.dante.data.cache.CacheProviders;
@@ -89,8 +90,10 @@ public class AppApiHelper implements ApiHelper {
     private AddressHelper addressHelper;
     private Gson gson;
     private User user;
+    private final VideoPlayUrlParser videoPlayUrlParser;
+
     @Inject
-    public AppApiHelper(CacheProviders cacheProviders, NoLimit91PornServiceApi noLimit91PornServiceApi, Forum91PronServiceApi forum91PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PigAvServiceApi pigAvServiceApi, ProxyServiceApi proxyServiceApi, AddressHelper addressHelper, Gson gson,User user) {
+    public AppApiHelper(CacheProviders cacheProviders, NoLimit91PornServiceApi noLimit91PornServiceApi, Forum91PronServiceApi forum91PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PigAvServiceApi pigAvServiceApi, ProxyServiceApi proxyServiceApi, AddressHelper addressHelper, Gson gson,User user,VideoPlayUrlParser videoPlayUrlParser) {
         this.cacheProviders = cacheProviders;
         this.noLimit91PornServiceApi = noLimit91PornServiceApi;
         this.forum91PronServiceApi = forum91PronServiceApi;
@@ -102,6 +105,8 @@ public class AppApiHelper implements ApiHelper {
         this.addressHelper = addressHelper;
         this.gson = gson;
         this.user = user;
+        this.videoPlayUrlParser = videoPlayUrlParser;
+
     }
 
     @Override
@@ -185,6 +190,7 @@ public class AppApiHelper implements ApiHelper {
                     @Override
                     public BaseResult<List<UnLimit91PornItem>> apply(String s) throws Exception {
                         return Parse91PronVideo.parseAuthorVideos(s);
+//                        return videoPlayUrlParser.parseVideoPlayUrl(s,user);
                     }
                 });
     }
@@ -237,7 +243,7 @@ public class AppApiHelper implements ApiHelper {
                 .map(new Function<String, VideoResult>() {
                     @Override
                     public VideoResult apply(String s) throws Exception {
-                        return Parse91PronVideo.parseVideoPlayUrl(s,user);
+                        return videoPlayUrlParser.parseVideoPlayUrl(s,user);
                     }
                 });
     }
@@ -451,8 +457,8 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<BaseResult<List<Forum91PronItem>>> loadPorn91ForumListData(String fid, final int page) {
-        return forum91PronServiceApi.forumdisplay(fid, page)
+    public Observable<BaseResult<List<Forum91PronItem>>> loadPorn91ForumListData(String fid, final int page,String filter) {
+        return forum91PronServiceApi.forumdisplay(fid, page,filter)
                 .map(new Function<String, BaseResult<List<Forum91PronItem>>>() {
                     @Override
                     public BaseResult<List<Forum91PronItem>> apply(String s) throws Exception {

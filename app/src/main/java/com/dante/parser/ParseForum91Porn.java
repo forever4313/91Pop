@@ -153,9 +153,13 @@ public class ParseForum91Porn {
                         }
                         break;
                     case "author":
-                        String author = td.select("a").first().text();
+                        if(td.select("a").size() == 0){
+                            forum91PronItem.setAuthor("匿名");
+                        }else{
+                            String author = td.select("a").first().text();
+                            forum91PronItem.setAuthor(author);
+                        }
                         String authorPublishTime = td.select("em").first().text();
-                        forum91PronItem.setAuthor(author);
                         forum91PronItem.setAuthorPublishTime(authorPublishTime);
                         break;
                     case "nums":
@@ -233,15 +237,15 @@ public class ParseForum91Porn {
         for (Element element : imagesElements) {
             String imgUrl = element.attr("src");
             //只替换不为空且结尾为.jpg 但链接不完整的
-            if (!TextUtils.isEmpty(imgUrl) && (imgUrl.endsWith(".jpg")|| imgUrl.endsWith(".png")) && !imgUrl.startsWith("http")) {
-                imgUrl = baseUrl + imgUrl;
-                element.attr("src", imgUrl);
-                stringList.add(imgUrl);
-            } else if (!TextUtils.isEmpty(element.attr("file"))) {
+            if (!TextUtils.isEmpty(element.attr("file"))) {
                 imgUrl =  element.attr("file");
                 if((imgUrl.toLowerCase().endsWith(".jpg") ||(imgUrl.toLowerCase().endsWith(".jpeg")|| imgUrl.toLowerCase().endsWith(".png") || imgUrl.toLowerCase().endsWith(".gif")) && !imgUrl.toLowerCase().startsWith("http"))){
                     imgUrl = baseUrl + imgUrl;
                 }
+                element.attr("src", imgUrl);
+                stringList.add(imgUrl);
+            }else if (!TextUtils.isEmpty(imgUrl) && (imgUrl.endsWith(".jpg")|| imgUrl.endsWith(".png") || imgUrl.endsWith(".gif")) && !imgUrl.startsWith("http")) {
+                imgUrl = baseUrl + imgUrl;
                 element.attr("src", imgUrl);
                 stringList.add(imgUrl);
             }
