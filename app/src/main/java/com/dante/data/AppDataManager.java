@@ -7,7 +7,7 @@ import com.dante.data.model.BaseResult;
 import com.dante.data.model.Category;
 import com.dante.data.model.Forum91PronItem;
 import com.dante.data.model.MeiZiTu;
-import com.dante.data.model.Mm99;
+import com.dante.data.model.MmRosi;
 import com.dante.data.model.Notice;
 import com.dante.data.model.PigAv;
 import com.dante.data.model.PigAvVideo;
@@ -240,13 +240,13 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Observable<BaseResult<List<Mm99>>> list99Mm(String category, int page, boolean cleanCache) {
-        return mApiHelper.list99Mm(category, page, cleanCache);
+    public Observable<BaseResult<List<MmRosi>>> listMmRosi(String category, int page, boolean cleanCache) {
+        return mApiHelper.listMmRosi(category, page, cleanCache);
     }
 
     @Override
-    public Observable<List<String>> mm99ImageList(int id, String imageUrl, boolean pullToRefresh) {
-        return mApiHelper.mm99ImageList(id, imageUrl, pullToRefresh);
+    public Observable<List<String>> mmRosiImageList(int id, String imageUrl, boolean pullToRefresh) {
+        return mApiHelper.mmRosiImageList(id, imageUrl, pullToRefresh);
     }
 
     @Override

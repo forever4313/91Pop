@@ -20,7 +20,6 @@ import com.bumptech.glide.request.transition.Transition;
 import com.dante.R;
 import com.dante.adapter.PictureAdapter;
 import com.dante.custom.TastyToast;
-import com.dante.data.model.Mm99;
 import com.dante.ui.MvpActivity;
 import com.dante.utils.DialogUtils;
 import com.dante.utils.GlideApp;

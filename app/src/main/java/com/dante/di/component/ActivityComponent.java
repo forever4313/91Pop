@@ -10,7 +10,7 @@ import com.dante.ui.download.FinishedFragment;
 import com.dante.ui.favorite.FavoriteActivity;
 import com.dante.ui.history.HistoryActivity;
 import com.dante.ui.images.meizitu.MeiZiTuFragment;
-import com.dante.ui.images.mm99.Mm99Fragment;
+import com.dante.ui.images.rosi.MmRosiFragment;
 import com.dante.ui.images.viewimage.PictureViewerActivity;
 import com.dante.ui.main.MainActivity;
 import com.dante.ui.mine.MineFragment;
@@ -80,7 +80,7 @@ public interface ActivityComponent {
 
     void inject(MeiZiTuFragment meiZiTuFragment);
 
-    void inject(Mm99Fragment mm99Fragment);
+    void inject(MmRosiFragment mmRosiFragment);
 
     void inject(DownloadingFragment downloadingFragment);
 

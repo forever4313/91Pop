@@ -1,4 +1,4 @@
-package com.dante.ui.images.mm99;
+package com.dante.ui.images.rosi;
 
 import android.arch.lifecycle.Lifecycle;
 import android.support.annotation.NonNull;
@@ -7,7 +7,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.dante.data.DataManager;
 import com.dante.data.model.BaseResult;
-import com.dante.data.model.Mm99;
+import com.dante.data.model.MmRosi;
 import com.dante.rxjava.CallBackWrapper;
 import com.dante.rxjava.RxSchedulersHelper;
 
@@ -23,7 +23,7 @@ import io.reactivex.functions.Function;
  * @date 2018/2/1
  */
 
-public class Mm99Presenter extends MvpBasePresenter<Mm99View> implements IMm99 {
+public class MmRosiPresenter extends MvpBasePresenter<MmRosiView> implements IMmRosi {
 
     private int page = 1;
     private int totalPage = 1;
@@ -31,7 +31,7 @@ public class Mm99Presenter extends MvpBasePresenter<Mm99View> implements IMm99 {
     private DataManager dataManager;
 
     @Inject
-    public Mm99Presenter(LifecycleProvider<Lifecycle.Event> provider, DataManager dataManager) {
+    public MmRosiPresenter(LifecycleProvider<Lifecycle.Event> provider, DataManager dataManager) {
         this.provider = provider;
         this.dataManager = dataManager;
     }
@@ -42,39 +42,39 @@ public class Mm99Presenter extends MvpBasePresenter<Mm99View> implements IMm99 {
             page = 1;
             totalPage = 1;
         }
-        dataManager.list99Mm(category, page, cleanCache)
-                .map(new Function<BaseResult<List<Mm99>>, List<Mm99>>() {
+        dataManager.listMmRosi(category, page, cleanCache)
+                .map(new Function<BaseResult<List<MmRosi>>, List<MmRosi>>() {
                     @Override
-                    public List<Mm99> apply(BaseResult<List<Mm99>> baseResult) throws Exception {
+                    public List<MmRosi> apply(BaseResult<List<MmRosi>> baseResult) throws Exception {
                         if (page == 1) {
                             totalPage = baseResult.getTotalPage();
                         }
                         return baseResult.getData();
                     }
                 })
-                .compose(RxSchedulersHelper.<List<Mm99>>ioMainThread())
-                .compose(provider.<List<Mm99>>bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(new CallBackWrapper<List<Mm99>>() {
+                .compose(RxSchedulersHelper.<List<MmRosi>>ioMainThread())
+                .compose(provider.<List<MmRosi>>bindUntilEvent(Lifecycle.Event.ON_DESTROY))
+                .subscribe(new CallBackWrapper<List<MmRosi>>() {
                     @Override
                     public void onBegin(Disposable d) {
-                        ifViewAttached(new ViewAction<Mm99View>() {
+                        ifViewAttached(new ViewAction<MmRosiView>() {
                             @Override
-                            public void run(@NonNull Mm99View view) {
+                            public void run(@NonNull MmRosiView view) {
                                 view.showLoading(pullToRefresh);
                             }
                         });
                     }
 
                     @Override
-                    public void onSuccess(final List<Mm99> mm99s) {
-                        ifViewAttached(new ViewAction<Mm99View>() {
+                    public void onSuccess(final List<MmRosi> mmRosis) {
+                        ifViewAttached(new ViewAction<MmRosiView>() {
                             @Override
-                            public void run(@NonNull Mm99View view) {
+                            public void run(@NonNull MmRosiView view) {
                                 if (page == 1) {
-                                    view.setData(mm99s);
+                                    view.setData(mmRosis);
                                     view.showContent();
                                 } else {
-                                    view.setMoreData(mm99s);
+                                    view.setMoreData(mmRosis);
                                 }
                                 //已经最后一页了
                                 if (page >= totalPage) {
@@ -88,9 +88,9 @@ public class Mm99Presenter extends MvpBasePresenter<Mm99View> implements IMm99 {
 
                     @Override
                     public void onError(final String msg, int code) {
-                        ifViewAttached(new ViewAction<Mm99View>() {
+                        ifViewAttached(new ViewAction<MmRosiView>() {
                             @Override
-                            public void run(@NonNull Mm99View view) {
+                            public void run(@NonNull MmRosiView view) {
                                 view.showError(msg);
                             }
                         });

@@ -22,13 +22,13 @@ public class Category implements Serializable {
     public static final String[] CATEGORY_DEFAULT_MEI_ZI_TU_NAME = {"主页", "最热", "推荐", "性感妹子", "日本妹子", "台湾妹子", "清纯妹子"};
     public static final String[] CATEGORY_DEFAULT_PIG_AV_VALUE = {"index", "熱門", "長片", "每日", "最新", "日韓", "精選"};
     public static final String[] CATEGORY_DEFAULT_PIG_AV_NAME = {"主页", "热门", "长片", "每日", "最新", "日韩", "精选"};
-    public static final String[] CATEGORY_DEFAULT_99_MM_VALUE = {"index", "meitui", "xinggan", "qingchun", "hot"};
-    public static final String[] CATEGORY_DEFAULT_99_MM_NAME = {"主页", "靓丽腿模", "性感美女", "清纯美女", "美女推荐"};
+    public static final String[] CATEGORY_DEFAULT_ROSI_VALUE = {"index"};
+    public static final String[] CATEGORY_DEFAULT_ROSI_NAME = {"主页"};
     public static final int TYPE_91PORN = 1;
     public static final int TYPE_91PORN_FORUM = 2;
     public static final int TYPE_MEI_ZI_TU = 3;
     public static final int TYPE_PIG_AV = 4;
-    public static final int TYPE_99_MM = 5;
+    public static final int TYPE_ROSI = 5;
     private static final long serialVersionUID = 1L;
 
     @Id(autoincrement = true)

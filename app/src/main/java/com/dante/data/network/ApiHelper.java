@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import com.dante.data.model.BaseResult;
 import com.dante.data.model.Forum91PronItem;
 import com.dante.data.model.MeiZiTu;
-import com.dante.data.model.Mm99;
+import com.dante.data.model.MmRosi;
 import com.dante.data.model.Notice;
 import com.dante.data.model.PigAv;
 import com.dante.data.model.PigAvVideo;
@@ -73,9 +73,9 @@ public interface ApiHelper {
 
     Observable<List<String>> meiZiTuImageList(int id, boolean pullToRefresh);
 
-    Observable<BaseResult<List<Mm99>>> list99Mm(String category, int page, boolean cleanCache);
+    Observable<BaseResult<List<MmRosi>>> listMmRosi(String category, int page, boolean cleanCache);
 
-    Observable<List<String>> mm99ImageList(int id, String imageUrl, boolean pullToRefresh);
+    Observable<List<String>> mmRosiImageList(int id, String imageUrl, boolean pullToRefresh);
 
     Observable<List<PigAv>> loadPigAvListByCategory(String category, boolean pullToRefresh);
 

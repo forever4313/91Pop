@@ -8,16 +8,16 @@ import com.dante.ui.basemain.BaseMainFragment;
  * @date 2018/2/1
  */
 
-public class Main99MmFragment extends BaseMainFragment {
+public class MainRosiFragment extends BaseMainFragment {
 
 
-    public static Main99MmFragment getInstance() {
-        return new Main99MmFragment();
+    public static MainRosiFragment getInstance() {
+        return new MainRosiFragment();
     }
 
     @Override
     public int getCategoryType() {
-        return Category.TYPE_99_MM;
+        return Category.TYPE_ROSI;
     }
 
     @Override

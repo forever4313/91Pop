@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.dante.data.network.apiservice.MmRosiServiceApi;
 import com.dante.parser.v9porn.VideoPlayUrlParser;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
@@ -12,7 +13,7 @@ import com.dante.data.model.BaseResult;
 import com.dante.data.model.Favorite;
 import com.dante.data.model.Forum91PronItem;
 import com.dante.data.model.MeiZiTu;
-import com.dante.data.model.Mm99;
+import com.dante.data.model.MmRosi;
 import com.dante.data.model.Notice;
 import com.dante.data.model.PigAv;
 import com.dante.data.model.PigAvFormRequest;
@@ -30,14 +31,13 @@ import com.dante.data.model.VideoResult;
 import com.dante.data.network.apiservice.Forum91PronServiceApi;
 import com.dante.data.network.apiservice.GitHubServiceApi;
 import com.dante.data.network.apiservice.MeiZiTuServiceApi;
-import com.dante.data.network.apiservice.Mm99ServiceApi;
 import com.dante.data.network.apiservice.NoLimit91PornServiceApi;
 import com.dante.data.network.apiservice.PigAvServiceApi;
 import com.dante.data.network.apiservice.ProxyServiceApi;
 import com.dante.exception.FavoriteException;
 import com.dante.exception.MessageException;
 import com.dante.parser.Parse91PronVideo;
-import com.dante.parser.Parse99Mm;
+import com.dante.parser.ParseRosi;
 import com.dante.parser.ParseForum91Porn;
 import com.dante.parser.ParseMeiZiTu;
 import com.dante.parser.ParsePigAv;
@@ -84,7 +84,7 @@ public class AppApiHelper implements ApiHelper {
     private Forum91PronServiceApi forum91PronServiceApi;
     private GitHubServiceApi gitHubServiceApi;
     private MeiZiTuServiceApi meiZiTuServiceApi;
-    private Mm99ServiceApi mm99ServiceApi;
+    private MmRosiServiceApi mmRosiServiceApi;
     private PigAvServiceApi pigAvServiceApi;
     private ProxyServiceApi proxyServiceApi;
     private AddressHelper addressHelper;
@@ -93,13 +93,13 @@ public class AppApiHelper implements ApiHelper {
     private final VideoPlayUrlParser videoPlayUrlParser;
 
     @Inject
-    public AppApiHelper(CacheProviders cacheProviders, NoLimit91PornServiceApi noLimit91PornServiceApi, Forum91PronServiceApi forum91PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, Mm99ServiceApi mm99ServiceApi, PigAvServiceApi pigAvServiceApi, ProxyServiceApi proxyServiceApi, AddressHelper addressHelper, Gson gson,User user,VideoPlayUrlParser videoPlayUrlParser) {
+    public AppApiHelper(CacheProviders cacheProviders, NoLimit91PornServiceApi noLimit91PornServiceApi, Forum91PronServiceApi forum91PronServiceApi, GitHubServiceApi gitHubServiceApi, MeiZiTuServiceApi meiZiTuServiceApi, MmRosiServiceApi mmRosiServiceApi, PigAvServiceApi pigAvServiceApi, ProxyServiceApi proxyServiceApi, AddressHelper addressHelper, Gson gson, User user, VideoPlayUrlParser videoPlayUrlParser) {
         this.cacheProviders = cacheProviders;
         this.noLimit91PornServiceApi = noLimit91PornServiceApi;
         this.forum91PronServiceApi = forum91PronServiceApi;
         this.gitHubServiceApi = gitHubServiceApi;
         this.meiZiTuServiceApi = meiZiTuServiceApi;
-        this.mm99ServiceApi = mm99ServiceApi;
+        this.mmRosiServiceApi = mmRosiServiceApi;
         this.pigAvServiceApi = pigAvServiceApi;
         this.proxyServiceApi = proxyServiceApi;
         this.addressHelper = addressHelper;
@@ -545,28 +545,28 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<BaseResult<List<Mm99>>> list99Mm(String category, final int page, boolean cleanCache) {
-        String url = buildUrl(category, page);
+    public Observable<BaseResult<List<MmRosi>>> listMmRosi(String category, final int page, boolean cleanCache) {
+        String url = buildRosiUrl(category, page);
         DynamicKeyGroup dynamicKeyGroup = new DynamicKeyGroup(category, page);
-        EvictDynamicKeyGroup evictDynamicKeyGroup = new EvictDynamicKeyGroup(cleanCache);
-        return cacheProviders.cacheWithLimitTime(mm99ServiceApi.imageList(url), dynamicKeyGroup, evictDynamicKeyGroup)
+        EvictDynamicKeyGroup evictDynamicKeyGroup = new EvictDynamicKeyGroup(true);
+        return cacheProviders.cacheWithLimitTime(mmRosiServiceApi.imageList(url), dynamicKeyGroup, evictDynamicKeyGroup)
                 .map(new Function<Reply<String>, String>() {
                     @Override
                     public String apply(Reply<String> stringReply) {
                         return stringReply.getData();
                     }
                 })
-                .map(new Function<String, BaseResult<List<Mm99>>>() {
+                .map(new Function<String, BaseResult<List<MmRosi>>>() {
                     @Override
-                    public BaseResult<List<Mm99>> apply(String s) {
-                        return Parse99Mm.parse99MmList(s, page);
+                    public BaseResult<List<MmRosi>> apply(String s) {
+                        return ParseRosi.parseRosiMmList(s, page);
                     }
                 });
     }
 
     @Override
-    public Observable<List<String>> mm99ImageList(int id, final String imageUrl, boolean pullToRefresh) {
-        return cacheProviders.cacheWithNoLimitTime(mm99ServiceApi.imageLists("view", id), new DynamicKey(id), new EvictDynamicKey(pullToRefresh))
+    public Observable<List<String>> mmRosiImageList(int id, final String imageUrl, boolean pullToRefresh) {
+        return cacheProviders.cacheWithNoLimitTime(mmRosiServiceApi.imageLists("view", id), new DynamicKey(id), new EvictDynamicKey(pullToRefresh))
                 .map(new Function<Reply<String>, String>() {
                     @Override
                     public String apply(Reply<String> stringReply) throws Exception {
@@ -704,38 +704,17 @@ public class AppApiHelper implements ApiHelper {
                 });
     }
 
-    private String buildUrl(String category, int page) {
+    private String buildRosiUrl(String category, int page) {
         switch (category) {
-            case "meitui":
+            case "index":
                 if (page == 1) {
-                    return Api.APP_99_MM_DOMAIN + "meitui/";
+                    return Api.APP_ROSI_MM_DOMAIN ;
                 } else {
-                    return Api.APP_99_MM_DOMAIN + "meitui/mm_1_" + page + ".html";
-                }
-
-            case "xinggan":
-                if (page == 1) {
-                    return Api.APP_99_MM_DOMAIN + "xinggan/";
-                } else {
-                    return Api.APP_99_MM_DOMAIN + "xinggan/mm_2_" + page + ".html";
-                }
-
-            case "qingchun":
-                if (page == 1) {
-                    return Api.APP_99_MM_DOMAIN + "qingchun/";
-                } else {
-                    return Api.APP_99_MM_DOMAIN + "qingchun/mm_3_" + page + ".html";
-                }
-
-            case "hot":
-                if (page == 1) {
-                    return Api.APP_99_MM_DOMAIN + "hot/";
-                } else {
-                    return Api.APP_99_MM_DOMAIN + "hot/mm_4_" + page + ".html";
+                    return Api.APP_ROSI_MM_DOMAIN + "index/" + page + ".html";
                 }
 
             default:
-                return Api.APP_99_MM_DOMAIN;
+                return Api.APP_ROSI_MM_DOMAIN;
         }
     }
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.dante.cookie.CookieManager;
+import com.dante.data.network.apiservice.MmRosiServiceApi;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.orhanobut.logger.Logger;
 import com.dante.cookie.SetCookieCache;
@@ -13,7 +13,6 @@ import com.dante.data.network.Api;
 import com.dante.data.network.apiservice.Forum91PronServiceApi;
 import com.dante.data.network.apiservice.GitHubServiceApi;
 import com.dante.data.network.apiservice.MeiZiTuServiceApi;
-import com.dante.data.network.apiservice.Mm99ServiceApi;
 import com.dante.data.network.apiservice.NoLimit91PornServiceApi;
 import com.dante.data.network.apiservice.PigAvServiceApi;
 import com.dante.data.network.apiservice.ProxyServiceApi;
@@ -101,7 +100,7 @@ public class ApiServiceModule {
         //动态baseUrl
 //        RetrofitUrlManager.getInstance().putDomain(Api.GITHUB_DOMAIN_NAME, Api.APP_GITHUB_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.MEI_ZI_TU_DOMAIN_NAME, Api.APP_MEIZITU_DOMAIN);
-        RetrofitUrlManager.getInstance().putDomain(Api.MM_99_DOMAIN_NAME, Api.APP_99_MM_DOMAIN);
+        RetrofitUrlManager.getInstance().putDomain(Api.MM_ROSI_DOMAIN_NAME, Api.APP_ROSI_MM_DOMAIN);
         RetrofitUrlManager.getInstance().putDomain(Api.XICI_DAILI_DOMAIN_NAME, Api.APP_PROXY_XICI_DAILI_DOMAIN);
         if (!TextUtils.isEmpty(addressHelper.getVideo91PornAddress())) {
             RetrofitUrlManager.getInstance().putDomain(Api.PORN91_VIDEO_DOMAIN_NAME, addressHelper.getVideo91PornAddress());
@@ -140,8 +139,8 @@ public class ApiServiceModule {
 
     @Singleton
     @Provides
-    Mm99ServiceApi providesMm99ServiceApi(Retrofit retrofit) {
-        return retrofit.create(Mm99ServiceApi.class);
+    MmRosiServiceApi providesRosiServiceApi(Retrofit retrofit) {
+        return retrofit.create(MmRosiServiceApi.class);
     }
 
     @Singleton

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.dante.data.model.Category;
 import com.dante.ui.images.meizitu.MeiZiTuFragment;
-import com.dante.ui.images.mm99.Mm99Fragment;
+import com.dante.ui.images.rosi.MmRosiFragment;
 import com.dante.ui.pigav.PigAvFragment;
 import com.dante.ui.porn91forum.Forum91IndexFragment;
 import com.dante.ui.porn91forum.ForumFragment;
@@ -107,10 +107,10 @@ public class BaseMainFragmentAdapter extends FragmentPagerAdapter {
                 PigAvFragment pigAvFragment = PigAvFragment.getInstance();
                 pigAvFragment.setCategory(category);
                 return pigAvFragment;
-            case Category.TYPE_99_MM:
-                Mm99Fragment mm99Fragment = Mm99Fragment.getInstance();
-                mm99Fragment.setCategory(category);
-                return mm99Fragment;
+            case Category.TYPE_ROSI:
+                MmRosiFragment mmRosiFragment = MmRosiFragment.getInstance();
+                mmRosiFragment.setCategory(category);
+                return mmRosiFragment;
             default:
         }
         return new Fragment();

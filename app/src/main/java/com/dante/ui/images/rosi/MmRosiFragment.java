@@ -1,4 +1,4 @@
-package com.dante.ui.images.mm99;
+package com.dante.ui.images.rosi;
 
 
 import android.content.Intent;
@@ -17,8 +17,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.dante.custom.TastyToast;
 import com.dante.R;
-import com.dante.adapter.Mm99Adapter;
-import com.dante.data.model.Mm99;
+import com.dante.adapter.MmRosiAdapter;
+import com.dante.data.model.MmRosi;
 import com.dante.ui.MvpFragment;
 import com.dante.ui.images.viewimage.PictureViewerActivity;
 import com.dante.utils.AppUtils;
@@ -37,29 +37,29 @@ import butterknife.Unbinder;
  *
  * @author flymegoc
  */
-public class Mm99Fragment extends MvpFragment<Mm99View, Mm99Presenter> implements Mm99View, SwipeRefreshLayout.OnRefreshListener {
+public class MmRosiFragment extends MvpFragment<MmRosiView, MmRosiPresenter> implements MmRosiView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
-    protected Mm99Presenter mm99Presenter;
+    protected MmRosiPresenter mmRosiPresenter;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipeLayout;
     Unbinder unbinder;
-    private Mm99Adapter mm99Adapter;
+    private MmRosiAdapter mmRosiAdapter;
 
-    public Mm99Fragment() {
+    public MmRosiFragment() {
         // Required empty public constructor
     }
 
-    public static Mm99Fragment getInstance() {
-        return new Mm99Fragment();
+    public static MmRosiFragment getInstance() {
+        return new MmRosiFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mm99Adapter = new Mm99Adapter(R.layout.item_99_mm);
+        mmRosiAdapter = new MmRosiAdapter(R.layout.item_rosi);
     }
 
     @Override
@@ -67,15 +67,15 @@ public class Mm99Fragment extends MvpFragment<Mm99View, Mm99Presenter> implement
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_mm99, container, false);
+        return inflater.inflate(R.layout.fragment_rosi, container, false);
     }
 
     @NonNull
     @Override
-    public Mm99Presenter createPresenter() {
+    public MmRosiPresenter createPresenter() {
         getActivityComponent().inject(this);
 
-        return mm99Presenter;
+        return mmRosiPresenter;
     }
 
     @Override
@@ -91,23 +91,23 @@ public class Mm99Fragment extends MvpFragment<Mm99View, Mm99Presenter> implement
         swipeLayout.setOnRefreshListener(this);
         AppUtils.setColorSchemeColors(context, swipeLayout);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        recyclerView.setAdapter(mm99Adapter);
-        mm99Adapter.setWidth(QMUIDisplayHelper.getScreenWidth(context) / 2);
-        mm99Adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+        recyclerView.setAdapter(mmRosiAdapter);
+        mmRosiAdapter.setWidth(QMUIDisplayHelper.getScreenWidth(context) / 2);
+        mmRosiAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
                 loadData(false, false);
             }
         });
-        mm99Adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mmRosiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Mm99 mm99 = (Mm99) adapter.getItem(position);
-                if (mm99 == null) {
+                MmRosi mmRosi = (MmRosi) adapter.getItem(position);
+                if (mmRosi == null) {
                     return;
                 }
                 Intent intent = new Intent(context, PictureViewerActivity.class);
-                intent.putExtra(Keys.KEY_INTENT_99_MM_ITEM, mm99);
+                intent.putExtra(Keys.KEY_INTENT_99_MM_ITEM, mmRosi);
                 startActivityWithAnimotion(intent);
             }
         });
@@ -142,18 +142,18 @@ public class Mm99Fragment extends MvpFragment<Mm99View, Mm99Presenter> implement
 
     @Override
     public void loadMoreFailed() {
-        mm99Adapter.loadMoreFail();
+        mmRosiAdapter.loadMoreFail();
     }
 
     @Override
     public void noMoreData() {
-        mm99Adapter.loadMoreEnd(true);
+        mmRosiAdapter.loadMoreEnd(true);
     }
 
     @Override
-    public void setMoreData(List<Mm99> mm99List) {
-        mm99Adapter.loadMoreComplete();
-        mm99Adapter.addData(mm99List);
+    public void setMoreData(List<MmRosi> mmRosiList) {
+        mmRosiAdapter.loadMoreComplete();
+        mmRosiAdapter.addData(mmRosiList);
     }
 
     @Override
@@ -162,8 +162,8 @@ public class Mm99Fragment extends MvpFragment<Mm99View, Mm99Presenter> implement
     }
 
     @Override
-    public void setData(List<Mm99> data) {
-        mm99Adapter.setNewData(data);
+    public void setData(List<MmRosi> data) {
+        mmRosiAdapter.setNewData(data);
     }
 
     @Override

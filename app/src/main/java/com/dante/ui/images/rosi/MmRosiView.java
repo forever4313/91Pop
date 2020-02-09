@@ -1,6 +1,6 @@
-package com.dante.ui.images.mm99;
+package com.dante.ui.images.rosi;
 
-import com.dante.data.model.Mm99;
+import com.dante.data.model.MmRosi;
 import com.dante.ui.BaseView;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.List;
  * @date 2018/2/1
  */
 
-public interface Mm99View extends BaseView {
+public interface MmRosiView extends BaseView {
     void loadMoreFailed();
 
     void noMoreData();
 
-    void setMoreData(List<Mm99> unLimit91PornItemList);
+    void setMoreData(List<MmRosi> unLimit91PornItemList);
 
     void loadData(boolean pullToRefresh, boolean cleanCache);
 
-    void setData(List<Mm99> data);
+    void setData(List<MmRosi> data);
 }

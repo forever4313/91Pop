@@ -37,7 +37,7 @@ import com.dante.ui.BaseFragment;
 import com.dante.ui.MvpActivity;
 import com.dante.ui.basemain.BaseMainFragment;
 import com.dante.ui.download.DownloadActivity;
-import com.dante.ui.images.Main99MmFragment;
+import com.dante.ui.images.MainRosiFragment;
 import com.dante.ui.images.MainMeiZiTuFragment;
 import com.dante.ui.mine.MineFragment;
 import com.dante.ui.music.MusicFragment;
@@ -81,7 +81,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     final int PORN91 = 1;
     final int PIG_AV = 2;
     final int MEI_ZI_TU = 0;
-    final int MM_99 = 1;
+    final int MM_ROSI = 1;
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottomNavigationBar;
     @BindView(R.id.fab_search)
@@ -97,7 +97,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     private Main91PronVideoFragment mMain91PronVideoFragment;
     private MainMeiZiTuFragment mMaiMeiZiTuFragment;
     private Main91ForumFragment mMain91ForumFragment;
-    private Main99MmFragment mMain99MmFragment;
+    private MainRosiFragment mMainRosiFragment;
     private MainPigAvFragment mMainPigAvFragment;
     private MusicFragment mMusicFragment;
     private MineFragment mMineFragment;
@@ -231,7 +231,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
     private void showPictureBottomSheet(int checkIndex) {
         new QMUIBottomSheet.BottomListSheetBuilder(this, true)
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), "妹子图")
-                .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), "九妹图社")
+                .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), "ROSI")
                 .addItem(ResourceUtil.getDrawable(this, R.drawable.ic_photo_library_black_24dp), "花瓣网")
                 .setCheckedIndex(checkIndex)
                 .setOnSheetItemClickListener(new QMUIBottomSheet.BottomListSheetBuilder.OnSheetItemClickListener() {
@@ -403,15 +403,15 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, mMaiMeiZiTuFragment, content.getId(), itemId, isInnerReplace);
                 secondTabShow = MEI_ZI_TU;
                 dataManager.setMainSecondTabShow(MEI_ZI_TU);
-                mMain99MmFragment = null;
+                mMainRosiFragment = null;
                 break;
-            case MM_99:
-                if (mMain99MmFragment == null) {
-                    mMain99MmFragment = Main99MmFragment.getInstance();
+            case MM_ROSI:
+                if (mMainRosiFragment == null) {
+                    mMainRosiFragment = MainRosiFragment.getInstance();
                 }
-                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, mMain99MmFragment, content.getId(), itemId, isInnerReplace);
-                secondTabShow = MM_99;
-                dataManager.setMainSecondTabShow(MM_99);
+                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, mMainRosiFragment, content.getId(), itemId, isInnerReplace);
+                secondTabShow = MM_ROSI;
+                dataManager.setMainSecondTabShow(MM_ROSI);
                 mMaiMeiZiTuFragment = null;
                 break;
             case 2:
@@ -704,7 +704,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter> implement
                 break;
             case 1:
                 mMaiMeiZiTuFragment = null;
-                mMain99MmFragment = null;
+                mMainRosiFragment = null;
                 break;
             case 2:
                 mMain91ForumFragment = null;

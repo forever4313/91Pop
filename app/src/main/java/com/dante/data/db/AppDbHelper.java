@@ -39,7 +39,7 @@ public class AppDbHelper implements DbHelper {
         initCategory(Category.TYPE_91PORN_FORUM, Category.CATEGORY_DEFAULT_91PORN_FORUM_VALUE, Category.CATEGORY_DEFAULT_91PORN_FORUM_NAME);
         initCategory(Category.TYPE_MEI_ZI_TU, Category.CATEGORY_DEFAULT_MEI_ZI_TU_VALUE, Category.CATEGORY_DEFAULT_MEI_ZI_TU_NAME);
         initCategory(Category.TYPE_PIG_AV, Category.CATEGORY_DEFAULT_PIG_AV_VALUE, Category.CATEGORY_DEFAULT_PIG_AV_NAME);
-        initCategory(Category.TYPE_99_MM, Category.CATEGORY_DEFAULT_99_MM_VALUE, Category.CATEGORY_DEFAULT_99_MM_NAME);
+        initCategory(Category.TYPE_ROSI, Category.CATEGORY_DEFAULT_ROSI_VALUE, Category.CATEGORY_DEFAULT_ROSI_NAME);
     }
 
     @Override

@@ -12,7 +12,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dante.R;
-import com.dante.data.model.Mm99;
+import com.dante.data.model.MmRosi;
 import com.dante.utils.GlideApp;
 
 import java.util.HashMap;
@@ -23,11 +23,11 @@ import java.util.Map;
  * @date 2018/2/1
  */
 
-public class Mm99Adapter extends BaseQuickAdapter<Mm99, BaseViewHolder> {
+public class MmRosiAdapter extends BaseQuickAdapter<MmRosi, BaseViewHolder> {
     private Map<String, Integer> heightMap = new HashMap<>();
     private int width;
 
-    public Mm99Adapter(int layoutResId) {
+    public MmRosiAdapter(int layoutResId) {
         super(layoutResId);
     }
 
@@ -36,7 +36,7 @@ public class Mm99Adapter extends BaseQuickAdapter<Mm99, BaseViewHolder> {
     }
 
     @Override
-    protected void convert(final BaseViewHolder helper, final Mm99 item) {
+    protected void convert(final BaseViewHolder helper, final MmRosi item) {
         final ImageView imageView = helper.getView(R.id.iv_item_99_mm);
         GlideApp.with(helper.itemView.getContext()).asBitmap().load(item.getImgUrl()).transition(new BitmapTransitionOptions().crossFade(300)).into(new SimpleTarget<Bitmap>() {
             @Override

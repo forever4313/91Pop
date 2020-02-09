@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @date 2018/2/1
  */
 
-public class Mm99 implements Serializable {
+public class MmRosi implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
