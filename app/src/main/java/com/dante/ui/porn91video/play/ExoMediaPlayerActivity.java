@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.devbrackets.android.exomedia.listener.OnPreparedListener;
@@ -13,6 +16,9 @@ import com.flymegoc.exolibrary.widget.ExoVideoView;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.dante.R;
 import com.dante.utils.GlideApp;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 
@@ -25,7 +31,6 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
     private ExoVideoView videoPlayer;
     private ExoVideoControlsMobile videoControlsMobile;
     private boolean isPauseByActivityEvent = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,26 +44,49 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
         videoPlayer = view.findViewById(R.id.video_view);
         videoControlsMobile = (ExoVideoControlsMobile) videoPlayer.getVideoControls();
         videoPlayer.setOnPreparedListener(this);
+
+
+
+
     }
 
     @Override
-    public void playVideo(String title, String videoUrl, String name, String thumImgUrl) {
+    public void playVideo(final String title, final String videoUrl, String name, final String thumImgUrl) {
+        String script = "javascript:"+videoUrl;
+        JSONObject object = new JSONObject();
+        try {
+            object.put("key1", "val1");
+            object.put("key2", "val2");
 
-        if (isPauseByActivityEvent) {
-            isPauseByActivityEvent = false;
-            videoPlayer.reset();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        videoControlsMobile.setOnBackButtonClickListener(new ExoVideoControlsMobile.OnBackButtonClickListener() {
+        String myValue = object.toString();
+        webView.evaluateJavascript(script, new ValueCallback<String>() {
             @Override
-            public void onBackClick(View view) {
-                onBackPressed();
+            public void onReceiveValue(String responseJson) {
+                System.out.println(responseJson);
+                String newVideoUrl = responseJson.substring(responseJson.indexOf("src='")+5,responseJson.indexOf("' "));
+
+                System.out.println(newVideoUrl);
+                if (isPauseByActivityEvent) {
+                    isPauseByActivityEvent = false;
+                    videoPlayer.reset();
+                }
+                videoControlsMobile.setOnBackButtonClickListener(new ExoVideoControlsMobile.OnBackButtonClickListener() {
+                    @Override
+                    public void onBackClick(View view) {
+                        onBackPressed();
+                    }
+                });
+                if (!TextUtils.isEmpty(thumImgUrl)) {
+                    GlideApp.with(ExoMediaPlayerActivity.this).load(Uri.parse(thumImgUrl)).transition(new DrawableTransitionOptions().crossFade(300)).into(videoPlayer.getPreviewImageView());
+                }
+                videoPlayer.setVideoURI(Uri.parse(newVideoUrl));
+                videoControlsMobile.setTitle(title);
             }
         });
-        if (!TextUtils.isEmpty(thumImgUrl)) {
-            GlideApp.with(this).load(Uri.parse(thumImgUrl)).transition(new DrawableTransitionOptions().crossFade(300)).into(videoPlayer.getPreviewImageView());
-        }
-        videoPlayer.setVideoURI(Uri.parse(videoUrl));
-        videoControlsMobile.setTitle(title);
+
     }
 
     @Override
@@ -97,5 +125,15 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
         }
         videoPlayer.release();
         super.onDestroy();
+    }
+
+
+    private class JsToJava
+    {
+        public void jsMethod(String paramFromJS)
+        {
+            //Log.i("CDH", paramFromJS);
+            System.out.println("js返回结果" + paramFromJS);//处理返回的结果
+        }
     }
 }

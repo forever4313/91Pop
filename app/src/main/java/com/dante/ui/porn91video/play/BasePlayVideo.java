@@ -17,6 +17,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -98,6 +100,9 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
     @Inject
     protected PlayVideoPresenter playVideoPresenter;
 
+    @BindView(R.id.webview)
+    WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,10 +114,24 @@ public abstract class BasePlayVideo extends MvpActivity<PlayVideoView, PlayVideo
         initIntentData();
         initDialog();
         initLoadHelper();
-        initData();
-        initBottomMenu();
+        initWebView();
 
-        initTab();
+    }
+
+    private void initWebView(){
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                System.out.println("===============");
+                initData();
+                initBottomMenu();
+                initTab();
+            }
+        });
+        webView.loadUrl("file:///android_asset/web/index.html");
     }
 
     private void initIntentData() {

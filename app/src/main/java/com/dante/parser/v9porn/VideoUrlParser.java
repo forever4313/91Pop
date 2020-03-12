@@ -22,13 +22,15 @@ public class VideoUrlParser extends BaseVideoPlayUrlParser implements VideoPlayU
         VideoResult videoResult = new VideoResult();
         Document document = Jsoup.parse(html);
         Element element = document.getElementById("player_one");
-        String videoUrl = element.selectFirst("source").attr("src");
-        videoResult.setVideoUrl(videoUrl);
-        int startIndex = videoUrl.lastIndexOf("/");
-        int endIndex = videoUrl.indexOf(".mp4");
-        String videoId = videoUrl.substring(startIndex + 1, endIndex);
-        videoResult.setVideoId(videoId);
-        Logger.t(TAG).d("视频Id：" + videoId);
+        String str = element.child(0).toString();
+        String jsResult = str.substring(str.indexOf("document.write")+15,str.indexOf(");"));
+//        String videoUrl = element.selectFirst("source").attr("src");
+        videoResult.setVideoUrl(jsResult);
+//        int startIndex = videoUrl.lastIndexOf("/");
+//        int endIndex = videoUrl.indexOf(".mp4");
+//        String videoId = videoUrl.substring(startIndex + 1, endIndex);
+//        videoResult.setVideoId(videoId);
+//        Logger.t(TAG).d("视频Id：" + videoId);
         parserOtherInfo(document, videoResult, user);
         return videoResult;
     }
