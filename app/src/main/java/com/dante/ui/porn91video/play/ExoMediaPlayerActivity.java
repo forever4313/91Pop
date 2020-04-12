@@ -52,41 +52,21 @@ public class ExoMediaPlayerActivity extends BasePlayVideo implements OnPreparedL
 
     @Override
     public void playVideo(final String title, final String videoUrl, String name, final String thumImgUrl) {
-        String script = "javascript:"+videoUrl;
-        JSONObject object = new JSONObject();
-        try {
-            object.put("key1", "val1");
-            object.put("key2", "val2");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (isPauseByActivityEvent) {
+            isPauseByActivityEvent = false;
+            videoPlayer.reset();
         }
-        String myValue = object.toString();
-        webView.evaluateJavascript(script, new ValueCallback<String>() {
+        videoControlsMobile.setOnBackButtonClickListener(new ExoVideoControlsMobile.OnBackButtonClickListener() {
             @Override
-            public void onReceiveValue(String responseJson) {
-                System.out.println(responseJson);
-                String newVideoUrl = responseJson.substring(responseJson.indexOf("src='")+5,responseJson.indexOf("' "));
-
-                System.out.println(newVideoUrl);
-                if (isPauseByActivityEvent) {
-                    isPauseByActivityEvent = false;
-                    videoPlayer.reset();
-                }
-                videoControlsMobile.setOnBackButtonClickListener(new ExoVideoControlsMobile.OnBackButtonClickListener() {
-                    @Override
-                    public void onBackClick(View view) {
-                        onBackPressed();
-                    }
-                });
-                if (!TextUtils.isEmpty(thumImgUrl)) {
-                    GlideApp.with(ExoMediaPlayerActivity.this).load(Uri.parse(thumImgUrl)).transition(new DrawableTransitionOptions().crossFade(300)).into(videoPlayer.getPreviewImageView());
-                }
-                videoPlayer.setVideoURI(Uri.parse(newVideoUrl));
-                videoControlsMobile.setTitle(title);
+            public void onBackClick(View view) {
+                onBackPressed();
             }
         });
-
+        if (!TextUtils.isEmpty(thumImgUrl)) {
+            GlideApp.with(this).load(Uri.parse(thumImgUrl)).transition(new DrawableTransitionOptions().crossFade(300)).into(videoPlayer.getPreviewImageView());
+        }
+        videoPlayer.setVideoURI(Uri.parse(videoUrl));
+        videoControlsMobile.setTitle(title);
     }
 
     @Override

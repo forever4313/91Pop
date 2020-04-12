@@ -36,13 +36,13 @@ public abstract class BaseVideoPlayUrlParser {
         Logger.t(TAG).d("作者：" + ownerName);
 
         String allInfo = doc.getElementById("videodetails-content").text();
-        String addDate = allInfo.substring(allInfo.indexOf("添加时间"), allInfo.indexOf("作者"));
-        videoResult.setAddDate(addDate);
-        Logger.t(TAG).d("添加时间：" + addDate);
+//        String addDate = allInfo.substring(allInfo.indexOf("添加时间"), allInfo.indexOf("作者"));
+        videoResult.setAddDate("ssss");
+//        Logger.t(TAG).d("添加时间：" + addDate);
 
-        String otherInfo = allInfo.substring(allInfo.indexOf("注册"), allInfo.indexOf("简介"));
-        videoResult.setUserOtherInfo(otherInfo);
-        Logger.t(TAG).d(otherInfo);
+//        String otherInfo = allInfo.substring(allInfo.indexOf("注册"), allInfo.indexOf("简介"));
+//        videoResult.setUserOtherInfo(otherInfo);
+//        Logger.t(TAG).d(otherInfo);
 
         try {
             String thumImg = doc.getElementById("player_one").attr("poster");
@@ -52,7 +52,7 @@ public abstract class BaseVideoPlayUrlParser {
             e.printStackTrace();
         }
 
-        String videoName = doc.getElementById("viewvideo-title").text();
+        String videoName = doc.getElementsByClass("login_register_header").first().text();
         videoResult.setVideoName(videoName);
         Logger.t(TAG).d("视频标题：" + videoName);
     }
