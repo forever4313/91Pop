@@ -430,42 +430,41 @@ public class Parse91PronVideo {
         Document doc = Jsoup.parse(html);
         Element body = doc.getElementById("leftside");
 
-        Elements videos = doc.select("div.myvideo");
-
-        for (Element element : videos) {
-
+        Element c = doc.getElementsByClass("col-sm-12").first();
+        Elements listchannel = c.getElementsByClass("col-xs-12");
+        for (Element element : listchannel) {
             UnLimit91PornItem unLimit91PornItem = new UnLimit91PornItem();
-
             String contentUrl = element.select("a").first().attr("href");
-
-            String viewKey = contentUrl.substring(contentUrl.indexOf("=") + 1, contentUrl.length());
+            //Logger.d(contentUrl);
+            if(contentUrl.contains("&")) {
+                contentUrl = contentUrl.substring(0, contentUrl.indexOf("&"));
+            }
+            // Logger.d(contentUrl);
+            String viewKey = contentUrl.substring(contentUrl.indexOf("=") + 1);
             unLimit91PornItem.setViewKey(viewKey);
-            //Logger.t(TAG).d(viewKey);
 
-            String title = element.select("strong").first().text();
-            unLimit91PornItem.setTitle(title);
-            //Logger.t(TAG).d(title);
-
-            String imgUrl = element.select("img").first().attr("src");
+            String imgUrl = element.select("a").first().select("img").first().attr("src");
+            //  Logger.d(imgUrl);
             unLimit91PornItem.setImgUrl(imgUrl);
-            //Logger.t(TAG).d(imgUrl);
+
+            String title = element.getElementsByClass("video-title").first().text();
+            //  Logger.d(title);
+            unLimit91PornItem.setTitle(title);
 
             String allInfo = element.text();
-            //Logger.t(TAG).d(allInfo);
 
-            String duration = allInfo.substring(allInfo.indexOf("时长") + 3, allInfo.indexOf("查看") - 3);
+            String duration = element.getElementsByClass("duration").first().text();
             unLimit91PornItem.setDuration(duration);
-            //Logger.t(TAG).d(duration);
-
-            String info = allInfo.substring(allInfo.indexOf("添加时间"), allInfo.length());
-            unLimit91PornItem.setInfo(info);
-            //Logger.t(TAG).d(info);
+//
+//            int start = allInfo.indexOf("添加时间");
+//            String info = allInfo.substring(start,allInfo.indexOf("作者"));
+//            unLimit91PornItem.setInfo(info.replace("还未被评分", ""));
+            //  Logger.d(info);
 
             unLimit91PornItemList.add(unLimit91PornItem);
         }
-
         //总页数
-        Element pagingnav = body.getElementById("paging");
+        Element pagingnav = doc.getElementById("paging");
         Elements a = pagingnav.select("a");
         if (a.size() >= 2) {
             String ppp = a.get(a.size() - 2).text();

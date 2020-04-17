@@ -239,12 +239,12 @@ public class ParseForum91Porn {
             //只替换不为空且结尾为.jpg 但链接不完整的
             if (!TextUtils.isEmpty(element.attr("file"))) {
                 imgUrl =  element.attr("file");
-                if((imgUrl.toLowerCase().endsWith(".jpg") ||(imgUrl.toLowerCase().endsWith(".jpeg")|| imgUrl.toLowerCase().endsWith(".png") || imgUrl.toLowerCase().endsWith(".gif")) && !imgUrl.toLowerCase().startsWith("http"))){
-                    imgUrl = baseUrl + imgUrl;
-                }
+//                if((imgUrl.toLowerCase().endsWith(".jpg") ||(imgUrl.toLowerCase().endsWith(".jpeg")|| imgUrl.toLowerCase().endsWith(".png") || imgUrl.toLowerCase().endsWith(".gif")) && !imgUrl.toLowerCase().startsWith("http"))){
+//                    imgUrl = baseUrl + imgUrl;
+//                }
                 element.attr("src", imgUrl);
                 stringList.add(imgUrl);
-            }else if (!TextUtils.isEmpty(imgUrl) && (imgUrl.endsWith(".jpg")|| imgUrl.endsWith(".png") || imgUrl.endsWith(".gif")) && !imgUrl.startsWith("http")) {
+            }else if (!TextUtils.isEmpty(imgUrl) && (imgUrl.endsWith(".jpg")|| imgUrl.endsWith(".png") || imgUrl.endsWith(".gif")) && !imgUrl.startsWith("http") && !imgUrl.contains("attachimg.gif")) {
                 imgUrl = baseUrl + imgUrl;
                 element.attr("src", imgUrl);
                 stringList.add(imgUrl);
