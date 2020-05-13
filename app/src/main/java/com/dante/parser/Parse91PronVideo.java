@@ -65,7 +65,7 @@ public class Parse91PronVideo {
 
             String allInfo = element.text();
             int start = allInfo.indexOf("添加时间");
-            String info = allInfo.substring(start,allInfo.indexOf("作者"));
+            String info = allInfo.substring(start,allInfo.indexOf("查看"));
             unLimit91PornItem.setInfo(info);
             // Logger.d(info);
             unLimit91PornItemList.add(unLimit91PornItem);

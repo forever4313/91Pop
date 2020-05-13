@@ -80,7 +80,7 @@ public class VideoUrlParser extends BaseVideoPlayUrlParser implements VideoPlayU
         videoResult.setVideoUrl(videoUrl);
         int startIndex = videoUrl.lastIndexOf("/");
         int endIndex = videoUrl.indexOf(".mp4");
-        String videoId = videoUrl.substring(startIndex + 1, endIndex);
+        String videoId = videoUrl.substring(0, endIndex);
         videoResult.setVideoId(videoId);
         Logger.t(TAG).d("视频Id：" + videoId);
         parserOtherInfo(document, videoResult, user);

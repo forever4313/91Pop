@@ -2,6 +2,10 @@ package com.dante.utils;
 
 import com.danikula.videocache.file.FileNameGenerator;
 
+import java.net.URL;
+
+import okhttp3.HttpUrl;
+
 /**
  * @author flymegoc
  * @date 2017/11/23
@@ -15,6 +19,9 @@ public class VideoCacheFileNameGenerator implements FileNameGenerator {
     //"http://185.38.13.130//mp43/238248.mp4?st=Uwgj0IbndG0N7J5qQx1CuA&e=1511443750"
     @Override
     public String generate(String url) {
+        if(url.contains("?")){
+            url = url.substring(0,url.indexOf("?"));
+        }
         int startIndex = url.lastIndexOf("/");
         int endIndex = url.indexOf(".mp4");
         return url.substring(startIndex, endIndex) + ".temp";
